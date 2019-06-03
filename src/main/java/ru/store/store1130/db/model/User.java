@@ -1,0 +1,37 @@
+package ru.store.store1130.db.model;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+@Table(name = "user")
+@Data
+@Accessors(chain = true)
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "role")
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<UserRole> roles;
+
+
+}
