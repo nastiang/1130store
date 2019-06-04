@@ -3,8 +3,6 @@ package ru.store.store1130.db.model;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.util.Set;
 

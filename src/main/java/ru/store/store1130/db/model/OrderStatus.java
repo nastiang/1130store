@@ -3,7 +3,7 @@ package ru.store.store1130.db.model;
 public enum OrderStatus {
     INPROCESS("в обработке"),
     BOOKED("забронировано"),
-    PAID("опачено"),
+    PAID("оплачено"),
     CLOSED("закрыто");
 
     private String text;
