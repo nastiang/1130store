@@ -9,11 +9,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("product/category")
-public class ProductController {
+public class ProductCategoryController {
     private final ProductCategoryService productCategoryService;
 
     @Autowired
-    public ProductController(ProductCategoryService productCategoryService) {
+    public ProductCategoryController(ProductCategoryService productCategoryService) {
         this.productCategoryService = productCategoryService;
     }
 

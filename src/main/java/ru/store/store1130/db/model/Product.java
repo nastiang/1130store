@@ -1,5 +1,6 @@
 package ru.store.store1130.db.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

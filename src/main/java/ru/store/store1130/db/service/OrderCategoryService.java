@@ -17,7 +17,7 @@ public class OrderCategoryService {
     }
 
 
-    public List<OrderCategory> findAllCategory() {
+    public List<OrderCategory> getAllCategory() {
         return orderCategoryRepository.findAll();
     }
 

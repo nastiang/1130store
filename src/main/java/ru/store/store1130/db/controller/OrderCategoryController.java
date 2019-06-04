@@ -3,7 +3,6 @@ package ru.store.store1130.db.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.store.store1130.db.model.OrderCategory;
-import ru.store.store1130.db.model.ProductCategory;
 import ru.store.store1130.db.service.OrderCategoryService;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class OrderCategoryController {
 
     @GetMapping
     public List<OrderCategory> getAllCategory() {
-        return orderCategoryService.findAllCategory();
+        return orderCategoryService.getAllCategory();
     }
 
     @GetMapping("{id}")

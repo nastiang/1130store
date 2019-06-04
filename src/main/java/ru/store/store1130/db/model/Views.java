@@ -1,4 +1,6 @@
 package ru.store.store1130.db.model;
 
-public class Views {
+public final class Views {
+    public interface Id {}
+    public interface FullProduct extends Id {}
 }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "usr")
 @Data
 @Accessors(chain = true)
 public class User {
