@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "order_category")
 @Data
 @Accessors(chain = true)
-
 public class OrderCategory {
 
     @Id
