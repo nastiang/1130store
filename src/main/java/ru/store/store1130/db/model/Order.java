@@ -1,14 +1,15 @@
 package ru.store.store1130.db.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "order")
 @Data
 @Accessors(chain = true)
 public class Order {
@@ -19,7 +20,8 @@ public class Order {
     private Long id;
 
     @Column(name = "date")
-    private Date date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime date;
 
     @Column(name = "sum")
     private BigDecimal sum;
@@ -32,7 +34,13 @@ public class Order {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
-    @Column(name = "order_status")
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "order_status_id", referencedColumnName = "id")
     private OrderStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "order_category_id", referencedColumnName = "id")
+    private OrderCategory orderCategory;
+
+
 }

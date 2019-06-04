@@ -3,13 +3,11 @@ package ru.store.store1130.db.model;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "usr")
 @Data
 @Accessors(chain = true)
 public class User {
@@ -30,7 +28,6 @@ public class User {
 
     @Column(name = "role")
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
     private Set<UserRole> roles;
 
 

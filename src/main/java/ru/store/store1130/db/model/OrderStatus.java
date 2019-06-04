@@ -1,18 +1,21 @@
 package ru.store.store1130.db.model;
 
-public enum OrderStatus {
-    INPROCESS("в обработке"),
-    BOOKED("забронировано"),
-    PAID("опачено"),
-    CLOSED("закрыто");
+import lombok.Data;
+import lombok.experimental.Accessors;
 
-    private String text;
+import javax.persistence.*;
 
-    OrderStatus (String text){
-        this.text = text;
-    }
+@Entity
+@Table(name = "order_status")
+@Data
+@Accessors(chain = true)
+public class OrderStatus {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
 
-    public String getText() {
-        return this.text;
-    }
+    @Column(name = "name_of_status")
+    private String nameOfStatus;
+
 }
