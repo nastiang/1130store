@@ -83,14 +83,4 @@
         </addColumn>
     </changeSet>
 
-    <changeSet id="9" author="Anastasia Shapovalova">
-        <addForeignKeyConstraint baseColumnNames="student_id"
-                                 baseTableName="student_group"
-                                 constraintName="student_group_student_id_fk"
-                                 referencedColumnNames="id"
-                                 referencedTableName="student"/>
-
-    </changeSet>
-
-
 </databaseChangeLog>
