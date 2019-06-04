@@ -1,17 +1,17 @@
 server:
-error:
-include-stacktrace: ALWAYS
+  error:
+    include-stacktrace: ALWAYS
 spring:
-datasource:
-url: jdbc:h2:mem:dev
-platform: h2
-initialize: true
-h2:
-console:
-enabled: true
-jpa:
-show-sql: true
-hibernate:
-ddl-auto: none
+  datasource:
+    url: jdbc:h2:mem:dev
+    platform: h2
+    initialize: true
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
 liquibase:
-change-log: classpath:/db/changelog/db.changelog-dev.xml
+  change-log: classpath:/db/changelog/db.changelog-dev.xml
