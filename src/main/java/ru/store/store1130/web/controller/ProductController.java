@@ -2,45 +2,45 @@ package ru.store.store1130.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.store.store1130.db.model.ProductCategory;
-import ru.store.store1130.service.ProductCategoryService;
+import ru.store.store1130.db.model.Product;
+import ru.store.store1130.service.ProductService;
+import ru.store.store1130.service.dto.ProductDto;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("product/category")
+@RequestMapping("product")
 public class ProductController {
-    private final ProductCategoryService productCategoryService;
+    private final ProductService productService;
 
     @Autowired
-    public ProductController(ProductCategoryService productCategoryService) {
-        this.productCategoryService = productCategoryService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
-    public List<ProductCategory> getAllCategory() {
-        return productCategoryService.findAllCategory();
+    public List<ProductDto> getAllProduct() {
+        return productService.getAllProduct();
     }
 
     @GetMapping("{id}")
-    public ProductCategory getOneCategory(@PathVariable("id") ProductCategory productCategory) {
-        return productCategoryService.findByIdCategory(productCategory.getId());
+    public ProductDto getOneProduct(@PathVariable("id") Product product){
+        return productService.getOneProduct(product.getId());
     }
 
     @PostMapping("add")
-    public ProductCategory createProductCategory(@RequestBody ProductCategory productCategory) {
-        return productCategoryService.createCategory(productCategory);
+    public ProductDto addProduct(@RequestBody ProductDto productDto) {
+        return productService.addProduct(productDto);
     }
 
     @PutMapping("{id}")
-    public ProductCategory updateProductCategory(
-            @PathVariable("id") ProductCategory categoryFromDB, @RequestParam("nameOfProductCategory") String productCategory
-    ){
-        return productCategoryService.updateCategory(categoryFromDB, productCategory);
+    public ProductDto updateProduct(@PathVariable("id") Product productFromDB, @RequestBody ProductDto productDto) {
+        return productService.updateProduct(productFromDB, productDto);
     }
 
     @DeleteMapping("{id}")
-    public void deleteProductCategory(@PathVariable("id") ProductCategory productCategory) {
-        productCategoryService.deleteCategory(productCategory);
+    public void deleteProduct(@PathVariable("id") Product product) {
+        productService.deleteProduct(product);
     }
 }
