@@ -5,11 +5,12 @@ spring:
  datasource:
    url: jdbc:postgresql://postgres:5432/Shop
    username: postgres
-   password: ${POSTGRES_PASSWORD}
+   password: andrew
    driver-class-name: org.postgresql.Driver
  jpa:
    database-platform: org.hibernate.dialect.PostgreSQLDialect
    hibernate:
      ddl-auto: none
+ liquibase:
+   change-log: classpath:/db/changelog/changelog-dev.xml
 liquibase:
- change-log: classpath:/db/changelog/changelog-dev.xml
