@@ -10,12 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("product/category")
 public class ProductController {
-    private final ProductCategoryService productCategoryService;
-
-    @Autowired
-    public ProductController(ProductCategoryService productCategoryService) {
-        this.productCategoryService = productCategoryService;
-    }
+    @Autowired ProductCategoryService productCategoryService;
 
     @GetMapping
     public List<ProductCategory> getAllCategory() {

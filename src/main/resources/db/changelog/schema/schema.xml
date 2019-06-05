@@ -83,4 +83,52 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="9" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                          baseTableName="order"
+                                          constraintName="order_user_id_fk"
+                                          referencedColumnNames="id"
+                                          referencedTableName="usr"/>
+    </changeSet>
+    
+    <changeSet id="10" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="order" 
+                                 baseColumnNames="product_id" 
+                                 constraintName="order_product_id_fk" 
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    
+    <changeSet id="11" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="order"
+                                 baseColumnNames="order_status_id"
+                                 constraintName="order_order_status_id_fk"
+                                 referencedTableName="order_status"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    
+    <changeSet id="12" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="order"
+                                 baseColumnNames="order_category_id"
+                                 constraintName="order_order_category_id_fk"
+                                 referencedTableName="order_category"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    
+    <changeSet id="13" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="product"
+                                 baseColumnNames="product_category_id"
+                                 constraintName="product_product_category_id_fk"
+                                 referencedTableName="product_category"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    
+    <changeSet id="14" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="usr"
+                                 baseColumnNames="user_role_id"
+                                 constraintName="usr_user_role_id_fk"
+                                 referencedTableName="user_role"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
 </databaseChangeLog>

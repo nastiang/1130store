@@ -27,6 +27,7 @@ public class User {
     private String password;
 
     @Column(name = "role")
+    @JoinColumn(name = "user_role_id", referencedColumnName = "id")
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     private Set<UserRole> roles;
 
