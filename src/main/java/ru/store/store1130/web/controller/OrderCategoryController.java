@@ -13,12 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/order/category")
 public class OrderCategoryController {
-    private final OrderCategoryService orderCategoryService;
-
-    @Autowired
-    public OrderCategoryController(OrderCategoryService orderCategoryService) {
-        this.orderCategoryService = orderCategoryService;
-    }
+    @Autowired OrderCategoryService orderCategoryService;
 
     @GetMapping
     public List<OrderCategoryDto> getAllCategory() {

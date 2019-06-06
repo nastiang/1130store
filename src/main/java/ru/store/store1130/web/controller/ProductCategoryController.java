@@ -12,12 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("product/category")
 public class ProductCategoryController {
-    private final ProductCategoryService productCategoryService;
-
     @Autowired
-    public ProductCategoryController(ProductCategoryService productCategoryService) {
-        this.productCategoryService = productCategoryService;
-    }
+    private ProductCategoryService productCategoryService;
 
     @GetMapping
     public List<ProductCategoryDto> getAllCategory() {

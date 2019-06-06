@@ -2,6 +2,7 @@ package ru.store.store1130.service.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import ru.store.store1130.db.model.OrderCategory;
 import ru.store.store1130.db.model.OrderStatus;
 import ru.store.store1130.db.model.Product;
 import ru.store.store1130.db.model.User;
@@ -18,5 +19,6 @@ public class OrderDto {
     private User user;
     private Product product;
     private OrderStatus status;
+    private OrderCategory orderCategory;
 
 }
