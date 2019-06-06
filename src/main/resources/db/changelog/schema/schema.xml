@@ -93,7 +93,7 @@
     </changeSet>
     
     <changeSet id="10" author="Anastasia Shapovalova">
-        <addForeignKeyConstraint baseTableName="order" 
+        <addForeignKeyConstraint baseTableName="order"
                                  baseColumnNames="product_id" 
                                  constraintName="order_product_id_fk" 
                                  referencedTableName="product"
@@ -135,7 +135,7 @@
 
         <addForeignKeyConstraint baseTableName="usr"
                                  baseColumnNames="role_id"
-                                 constraintName="usr_user_role_fk"
+                                 constraintName="usr_user_role_id_fk"
                                  referencedTableName="user_role"
                                  referencedColumnNames="id" />
     </changeSet>

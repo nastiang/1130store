@@ -1,9 +1,14 @@
 package ru.store.store1130.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ru.store.store1130.db.model.Product;
-import ru.store.store1130.service.ProductService;
+import ru.store.store1130.service.impl.ProductServiceImpl;
 import ru.store.store1130.service.dto.ProductDto;
 
 import java.util.List;
@@ -14,11 +19,15 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productService;
 
     @GetMapping
-    public List<ProductDto> getAllProduct() {
-        return productService.getAllProduct();
+    public Page<ProductDto> getAllProduct(
+            @PageableDefault(size = 20, sort = { "nameOfProduct" }, direction = Sort.Direction.ASC) Pageable p,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "productCategory", required = false) String filter
+    ) {
+        return productService.getAllProduct(p, sortBy, filter);
     }
 
     @GetMapping("{id}")
@@ -40,4 +49,5 @@ public class ProductController {
     public void deleteProduct(@PathVariable("id") Product product) {
         productService.deleteProduct(product);
     }
+
 }

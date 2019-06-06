@@ -1,23 +1,26 @@
 package ru.store.store1130.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ru.store.store1130.db.model.OrderCategory;
-import ru.store.store1130.mapper.OrderCategoryMapper;
 import ru.store.store1130.service.OrderCategoryService;
 import ru.store.store1130.service.dto.OrderCategoryDto;
-
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/order/category")
 public class OrderCategoryController {
-    @Autowired OrderCategoryService orderCategoryService;
+    @Autowired
+    OrderCategoryService orderCategoryService;
 
     @GetMapping
-    public List<OrderCategoryDto> getAllCategory() {
-        return orderCategoryService.getAllCategory();
+    public Page<OrderCategoryDto> getAllCategory(
+            @PageableDefault(size = 20, sort = { "nameOfCategory" }, direction = Sort.Direction.DESC) Pageable p
+    ) {
+        return orderCategoryService.getAllCategory(p);
     }
 
     @GetMapping("{id}")
