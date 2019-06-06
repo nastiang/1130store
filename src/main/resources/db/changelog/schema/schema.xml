@@ -135,7 +135,7 @@
 
         <addForeignKeyConstraint baseTableName="usr"
                                  baseColumnNames="role_id"
-                                 constraintName="usr_user_role_id_fk"
+                                 constraintName="usr_user_role_fk"
                                  referencedTableName="user_role"
                                  referencedColumnNames="id" />
     </changeSet>
@@ -144,6 +144,14 @@
         <addColumn tableName="sales_order">
             <column name="order_type" type="varchar(20)" />
         </addColumn>
+    </changeSet>
+
+    <changeSet id="17" author="Artem">
+        <addForeignKeyConstraint baseTableName="usr"
+                                 baseColumnNames="role_id"
+                                 constraintName="usr_role_id_fk"
+                                 referencedTableName="user_role"
+                                 referencedColumnNames="id" />
     </changeSet>
 
 </databaseChangeLog>

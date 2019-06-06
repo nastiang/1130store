@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ru.store.store1130.db.model.Product;
+import ru.store.store1130.db.model.ProductCategory;
 import ru.store.store1130.service.impl.ProductServiceImpl;
 import ru.store.store1130.service.dto.ProductDto;
 
@@ -25,9 +26,10 @@ public class ProductController {
     public Page<ProductDto> getAllProduct(
             @PageableDefault(size = 20, sort = { "nameOfProduct" }, direction = Sort.Direction.ASC) Pageable p,
             @RequestParam(value = "sortBy", required = false) String sortBy,
-            @RequestParam(value = "productCategory", required = false) String filter
+            @RequestParam(value = "filter", required = false)String filter,
+            @RequestParam(value = "filterParam", required = false)String filterParam
     ) {
-        return productService.getAllProduct(p, sortBy, filter);
+        return productService.getAllProduct(p, sortBy, filter, filterParam);
     }
 
     @GetMapping("{id}")

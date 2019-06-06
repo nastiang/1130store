@@ -6,7 +6,7 @@ import ru.store.store1130.db.model.Product;
 import ru.store.store1130.service.dto.ProductDto;
 
 public interface ProductService {
-    Page<ProductDto> getAllProduct(Pageable p, String sortBy, String filter);
+    Page<ProductDto> getAllProduct(Pageable p, String sortBy, String filter, String filterParam);
     ProductDto getOneProduct(Long id);
     ProductDto addProduct(ProductDto productDto);
     ProductDto updateProduct(Product productFromDB, ProductDto productDto);

@@ -10,12 +10,13 @@ import ru.store.store1130.mapper.ProductMapper;
 import ru.store.store1130.service.ProductService;
 import ru.store.store1130.service.dto.ProductDto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
@@ -25,11 +26,11 @@ public class ProductServiceImpl implements ProductService{
         this.productMapper = productMapper;
     }
 
-    public Page<ProductDto> getAllProduct(Pageable p, String sortBy, String filter) {
+    public Page<ProductDto> getAllProduct(Pageable p, String sortBy, String filter, String filterParam) {
         if (sortBy == null || sortBy.equals("")) {
-            return getPageProductDtos(p, filter);
+            return getPageProductDtos(p, filter, filterParam);
         } else {
-            return getPageProductDtos(getPageRequest(sortBy), filter);
+            return getPageProductDtos(getPageRequest(sortBy), filter, filterParam);
         }
     }
 
@@ -58,34 +59,92 @@ public class ProductServiceImpl implements ProductService{
         productRepository.delete(product);
     }
 
-    private Page<ProductDto> getPageProductDtos(Pageable p, String filter) {
+    private Page<ProductDto> getPageProductDtos(Pageable p, String  filter, String filterParam) {
         List<ProductDto> productDtos = new ArrayList<>();
         Page<Product> products = productRepository.findAll(p);
 
-        for (Product product : products) {
-            productDtos.add(productMapper.productCategoryToDto(product));
-        }
+        if (filter == null) {
+            for (Product product : products) {
+                productDtos.add(productMapper.productCategoryToDto(product));
+            }
 
-        if (filter == null || filter.equals(""))
             return new PageImpl<>(productDtos);
-        else {
-            List<ProductDto> collectPage = null;
+        } else {
+            List<Product> collect = null;
+
             switch (filter) {
                 case "productCategory":
-                    collectPage = productDtos
-                            .stream()
-                            .filter(productDto -> productDto.getProductCategory().getNameOfProductCategory().equals(filter))
-                            .collect(Collectors.toList());
+                    //Фильтр по категориям продуктов
+                    collect = products
+                        .getContent()
+                        .stream()
+                        .filter(item -> item.getProductCategory().getNameOfProductCategory().equals(filterParam))
+                        .collect(Collectors.toList());
                     break;
 
-
-                default:
+                case "price":
+                case "cost":
+                    //Фильтр по цене или себестоимости
+                    collect = getProductsByCostOrPriceFilter(filter, filterParam, products, collect);
                     break;
+
             }
-            return new PageImpl<>(collectPage);
+
+            for (Product product : collect) {
+                productDtos.add(productMapper.productCategoryToDto(product));
+            }
+            return new PageImpl<>(productDtos);
         }
     }
 
+    //Получение фильтрованной(по price или cost) List<Product> collect
+    private List<Product> getProductsByCostOrPriceFilter(String filter, String filterParam, Page<Product> products, List<Product> collect) {
+        String action = filterParam.replaceAll("\\d+", "");
+        String substring = filterParam.substring(action.length());
+        BigDecimal number = new BigDecimal(substring);
+
+        switch (action) {
+            case ">":
+                collect = products.getContent().stream()
+                        .filter(item -> {
+                            if (filter.equals("cost")) {
+                                return item.getCost().compareTo(number) == 1;
+                            } else {
+                                return item.getPrice().compareTo(number) == 1;
+                            }
+                        })
+                        .collect(Collectors.toList());
+
+                break;
+
+            case "<":
+                collect = products.getContent().stream()
+                        .filter(item -> {
+                            if (filter.equals("cost")) {
+                                return item.getCost().compareTo(number) == -1;
+                            } else {
+                                return item.getPrice().compareTo(number) == -1;
+                            }
+                        }).collect(Collectors.toList());
+
+                break;
+
+            case "=":
+                collect = products.getContent().stream()
+                        .filter(item -> {
+                            if (filter.equals("cost")) {
+                                return item.getCost().compareTo(number) == 0;
+                            } else {
+                                return item.getPrice().compareTo(number) == 0;
+                            }
+                        }).collect(Collectors.toList());
+
+                break;
+        }
+        return collect;
+    }
+
+    //Сортировка по параметру из RequestParam
     private PageRequest getPageRequest(String sortBy) {
         Sort sort = Sort.by(Sort.Direction.ASC, sortBy);
         return PageRequest.of(0, 20, sort);
