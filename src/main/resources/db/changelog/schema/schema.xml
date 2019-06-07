@@ -98,15 +98,7 @@
                                  referencedTableName="product"
                                  referencedColumnNames="id"/>
     </changeSet>
-    
-    <changeSet id="11" author="Anastasia Shapovalova">
-        <addForeignKeyConstraint baseTableName="order"
-                                 baseColumnNames="order_status_id"
-                                 constraintName="order_order_status_id_fk"
-                                 referencedTableName="order_status"
-                                 referencedColumnNames="id"/>
-    </changeSet>
-    
+
     <changeSet id="12" author="Anastasia Shapovalova">
         <addForeignKeyConstraint baseTableName="order"
                                  baseColumnNames="order_category_id"
@@ -128,6 +120,14 @@
                                  baseColumnNames="user_role_id"
                                  constraintName="usr_user_role_id_fk"
                                  referencedTableName="user_role"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="11" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="order"
+                                 baseColumnNames="order_status_id"
+                                 constraintName="order_order_status_id_fk"
+                                 referencedTableName="order_status"
                                  referencedColumnNames="id"/>
     </changeSet>
 
