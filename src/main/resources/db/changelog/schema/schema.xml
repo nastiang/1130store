@@ -82,6 +82,7 @@
             </column>
         </addColumn>
     </changeSet>
+    
 
     <changeSet id="9" author="Anastasia Shapovalova">
         <addForeignKeyConstraint baseColumnNames="user_id"
@@ -92,7 +93,7 @@
     </changeSet>
     
     <changeSet id="10" author="Anastasia Shapovalova">
-        <addForeignKeyConstraint baseTableName="order" 
+        <addForeignKeyConstraint baseTableName="order"
                                  baseColumnNames="product_id" 
                                  constraintName="order_product_id_fk" 
                                  referencedTableName="product"
@@ -115,12 +116,34 @@
                                  referencedColumnNames="id"/>
     </changeSet>
     
-    <changeSet id="14" author="Anastasia Shapovalova">
+    <changeSet id="14" author="Artem">
+        <renameTable oldTableName="order" newTableName="sales_order" />
+    </changeSet>
+
+    <changeSet id="15" author="Artem">
+        <renameColumn tableName="usr" oldColumnName="role" newColumnName="role_id"/>
+
+        <modifyDataType tableName="usr" columnName="role_id" newDataType="bigint" />
+
         <addForeignKeyConstraint baseTableName="usr"
-                                 baseColumnNames="user_role_id"
-                                 constraintName="usr_user_role_id_fk"
+                                 baseColumnNames="role_id"
+                                 constraintName="usr_user_role_fk"
                                  referencedTableName="user_role"
-                                 referencedColumnNames="id"/>
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="16" author="Artem">
+        <addColumn tableName="sales_order">
+            <column name="order_type" type="varchar(20)" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="17" author="Artem">
+        <addForeignKeyConstraint baseTableName="usr"
+                                 baseColumnNames="role_id"
+                                 constraintName="usr_role_id_fk"
+                                 referencedTableName="user_role"
+                                 referencedColumnNames="id" />
     </changeSet>
 
     <changeSet id="11" author="Anastasia Shapovalova">

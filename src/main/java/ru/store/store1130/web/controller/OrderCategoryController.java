@@ -1,34 +1,40 @@
 package ru.store.store1130.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ru.store.store1130.db.model.OrderCategory;
 import ru.store.store1130.service.OrderCategoryService;
-
-import java.util.List;
+import ru.store.store1130.service.dto.OrderCategoryDto;
 
 @RestController
 @RequestMapping("/order/category")
 public class OrderCategoryController {
-    @Autowired OrderCategoryService orderCategoryService;
+    @Autowired
+    OrderCategoryService orderCategoryService;
 
     @GetMapping
-    public List<OrderCategory> getAllCategory() {
-        return orderCategoryService.findAllCategory();
+    public Page<OrderCategoryDto> getAllCategory(
+            @PageableDefault(size = 20, sort = { "nameOfCategory" }, direction = Sort.Direction.DESC) Pageable p
+    ) {
+        return orderCategoryService.getAllCategory(p);
     }
 
     @GetMapping("{id}")
-    public OrderCategory getOneCategory(@PathVariable("id") OrderCategory orderCategory) {
+    public OrderCategoryDto getOneCategory(@PathVariable("id") OrderCategory orderCategory) {
         return orderCategoryService.findByIdCategory(orderCategory.getId());
     }
 
     @PostMapping("add")
-    public OrderCategory createOrderCategory(@RequestBody OrderCategory orderCategory) {
-        return orderCategoryService.createCategory(orderCategory);
+    public OrderCategoryDto createOrderCategory(@RequestBody OrderCategoryDto orderCategoryDto) {
+        return orderCategoryService.createCategory(orderCategoryDto);
     }
 
     @PutMapping("{id}")
-    public OrderCategory updateOrderCategory(
+    public OrderCategoryDto updateOrderCategory(
             @PathVariable("id") OrderCategory categoryFromDB, @RequestParam("nameOfCategory") String orderCategory
     ){
         return orderCategoryService.updateCategory(categoryFromDB, orderCategory);
