@@ -26,10 +26,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role")
-    @JoinColumn(name = "user_role_id", referencedColumnName = "id")
-    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
-    private Set<UserRole> roles;
+    @OneToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private UserRole role;
 
 
 }
