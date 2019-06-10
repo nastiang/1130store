@@ -20,5 +20,7 @@ public interface SalesOrderService {
     List<SalesOrderDto> findByProduct(Long productStatusId);
     List<SalesOrderDto> findByProductCategory(Long productCategoryId);
     List<SalesOrderDto> findByDate(LocalDate date);
+    SalesOrderDto addToBucket(SalesOrderDto salesOrderDto, Long productId, int value);
+    SalesOrderDto deleteFromBucket(SalesOrderDto salesOrderDto, Long productId);
 
 }

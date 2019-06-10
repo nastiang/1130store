@@ -27,6 +27,9 @@ public class Product {
     @Column(name = "cost")
     private BigDecimal cost;
 
+    @Column(name = "count")
+    private int count;
+
     @ManyToOne
     @JoinColumn(name = "product_category_id", referencedColumnName = "id")
     private ProductCategory productCategory;

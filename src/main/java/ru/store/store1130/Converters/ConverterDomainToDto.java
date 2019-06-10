@@ -5,6 +5,7 @@ import ru.store.store1130.db.model.*;
 import ru.store.store1130.service.dto.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Component
@@ -14,7 +15,7 @@ public class ConverterDomainToDto {
         order.setId(orderDto.getId());
         order.setDate(orderDto.getDate());
         order.setOrderCategory(orderDto.getOrderCategory());
-        order.setProductList(orderDto.getProductList());
+        order.setSalesBucket(orderDto.getSalesBucket());
         order.setStatus(orderDto.getStatus());
         order.setSum(orderDto.getSum());
         order.setUser(orderDto.getUser());
@@ -27,7 +28,7 @@ public class ConverterDomainToDto {
         orderDto.setId(order.getId());
         orderDto.setDate(order.getDate());
         orderDto.setOrderCategory(order.getOrderCategory());
-        orderDto.setProductList(order.getProductList());
+        orderDto.setSalesBucket(order.getSalesBucket());
         orderDto.setStatus(order.getStatus());
         orderDto.setSum(order.getSum());
         orderDto.setUser(order.getUser());
@@ -51,6 +52,16 @@ public class ConverterDomainToDto {
             orderDtoList.add(converterDomainToDto.convertToDto(order1));
         }
         return orderDtoList;
+    }
+
+    public LinkedHashMap<Long,Integer> convertToDomain(LinkedHashMap<Long,Integer> salesOrderDtoLinkedHashMap) {
+        LinkedHashMap<Long, Integer> domainLinkedHashMap = (LinkedHashMap)salesOrderDtoLinkedHashMap.clone();
+        return domainLinkedHashMap;
+    }
+
+    public LinkedHashMap<Long,Integer> convertToDto(LinkedHashMap<Long,Integer> salesOrderLinkedHashMap) {
+        LinkedHashMap<Long, Integer> dtoLinkedHashMap = (LinkedHashMap)salesOrderLinkedHashMap.clone();
+        return dtoLinkedHashMap;
     }
 
     public OrderCategory convertToDomain(OrderCategoryDto orderCategoryDto){

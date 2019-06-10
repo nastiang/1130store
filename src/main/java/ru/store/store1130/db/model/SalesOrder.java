@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Entity
@@ -33,7 +34,7 @@ public class SalesOrder {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private List<Product> productList;
+    private LinkedHashMap<Long,Integer> salesBucket;
 
     @ManyToOne
     @JoinColumn(name = "order_status_id", referencedColumnName = "id")
