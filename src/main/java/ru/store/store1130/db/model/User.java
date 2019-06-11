@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "usr")
 @Data
 @Accessors(chain = true)
 public class User {
@@ -26,10 +26,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role")
-    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    private Set<UserRole> roles;
+    @OneToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private UserRole role;
 
 
 }

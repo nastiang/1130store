@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "sales_order")
 @Data
 @Accessors(chain = true)
 public class Order {
@@ -34,7 +34,13 @@ public class Order {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
-    @Column(name = "order_status")
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "order_status_id", referencedColumnName = "id")
     private OrderStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "order_category_id", referencedColumnName = "id")
+    private OrderCategory orderCategory;
+
+
 }

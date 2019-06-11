@@ -57,4 +57,101 @@
             <column name="name_of_product_category" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
+
+    <changeSet id="6" author="Anastasia Shapovalova">
+        <createTable tableName="user_role">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="user_role_pkey" nullable="false"/>
+            </column>
+            <column name="name_of_role" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="7" author="Anastasia Shapovalova">
+        <createTable tableName="order_status">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="order_status_pkey" nullable="false"/>
+            </column>
+            <column name="name_of_status" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="8" author="Anastasia Shapovalova">
+        <addColumn tableName="order">
+            <column name="order_category_id" type="BIGSERIAL">
+            </column>
+        </addColumn>
+    </changeSet>
+    
+
+    <changeSet id="9" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                          baseTableName="order"
+                                          constraintName="order_user_id_fk"
+                                          referencedColumnNames="id"
+                                          referencedTableName="usr"/>
+    </changeSet>
+    
+    <changeSet id="10" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="order"
+                                 baseColumnNames="product_id" 
+                                 constraintName="order_product_id_fk" 
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    
+    <changeSet id="11" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="order"
+                                 baseColumnNames="order_status_id"
+                                 constraintName="order_order_status_id_fk"
+                                 referencedTableName="order_status"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    
+    <changeSet id="12" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="order"
+                                 baseColumnNames="order_category_id"
+                                 constraintName="order_order_category_id_fk"
+                                 referencedTableName="order_category"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    
+    <changeSet id="13" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="product"
+                                 baseColumnNames="product_category_id"
+                                 constraintName="product_product_category_id_fk"
+                                 referencedTableName="product_category"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    
+    <changeSet id="14" author="Artem">
+        <renameTable oldTableName="order" newTableName="sales_order" />
+    </changeSet>
+
+    <changeSet id="15" author="Artem">
+        <renameColumn tableName="usr" oldColumnName="role" newColumnName="role_id"/>
+
+        <modifyDataType tableName="usr" columnName="role_id" newDataType="bigint" />
+
+        <addForeignKeyConstraint baseTableName="usr"
+                                 baseColumnNames="role_id"
+                                 constraintName="usr_user_role_fk"
+                                 referencedTableName="user_role"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="16" author="Artem">
+        <addColumn tableName="sales_order">
+            <column name="order_type" type="varchar(20)" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="17" author="Artem">
+        <addForeignKeyConstraint baseTableName="usr"
+                                 baseColumnNames="role_id"
+                                 constraintName="usr_role_id_fk"
+                                 referencedTableName="user_role"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
 </databaseChangeLog>
