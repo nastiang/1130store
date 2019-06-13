@@ -1,23 +1,21 @@
 package ru.store.store1130.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.store.store1130.db.model.OrderStatus;
 import ru.store.store1130.db.model.Product;
 import ru.store.store1130.db.model.SalesOrder;
+import ru.store.store1130.db.repository.BucketRepository;
 import ru.store.store1130.db.repository.ProductRepository;
 import ru.store.store1130.db.repository.SalesOrderReposirory;
 import ru.store.store1130.service.SalesOrderService;
-import ru.store.store1130.service.dto.ProductDto;
+import ru.store.store1130.service.dto.BucketDto;
 import ru.store.store1130.service.dto.SalesOrderDto;
 import ru.store.store1130.Converters.ConverterDomainToDto;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SalesOrderServiceImpl implements SalesOrderService {
@@ -28,6 +26,8 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     ConverterDomainToDto converterDomainToDto;
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    BucketRepository bucketRepository;
 
     @Override
     public Page<SalesOrderDto> getAllOrder(Pageable pageable, String sortBy, String filter, String filterParam) {
@@ -90,21 +90,29 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     @Override
     public SalesOrderDto addToBucket(SalesOrderDto salesOrderDto, Long productId, int value) {
-        ProductDto productDto = converterDomainToDto.convertToDto(productRepository.findById(productId).orElse(new Product()));
-        salesOrderDto.getSalesBucket().put(productDto.getId(), value);
-        return salesOrderDto;
+        BucketDto bucketDto = new BucketDto();
+        bucketDto.setProduct(productRepository.findById(productId).orElse(new Product())).setValue(value);
+        bucketRepository.save(converterDomainToDto.convertToDomain(bucketDto));
+        return salesOrderDto.setBucket(converterDomainToDto.convertToDomain(bucketDto));
     }
 
     @Override
     public SalesOrderDto deleteFromBucket(SalesOrderDto salesOrderDto, Long productId) {
-        ProductDto productDto = converterDomainToDto.convertToDto(productRepository.findById(productId).orElse(new Product()));
-        int count = 1;
-        int changedValue =
-        salesOrderDto.getSalesBucket().get(productDto.getId()) - count;
-        if (changedValue > 0) {
-            salesOrderDto.getSalesBucket().put(productId, changedValue);
-        }
-        else salesOrderDto.getSalesBucket().remove(productId);
+  //      ProductDto productDto = converterDomainToDto.convertToDto(productRepository.findById(productId).orElse(new Product()));
+    //    int count = 1;
+       // int changedValue =
+      //          Bucket bucket = bucketRepository.getOne(salesOrderDto.getBucket().getId());
+
+      //         if (bucket.getValue() > 0) {
+      //             bucketRepository.save(bucket);
+      //         }
+      //         else
+
+      //  salesOrderDto.getSalesBucket().get(productDto.getId()) - count;
+      //  if (changedValue > 0) {
+      //      salesOrderDto.getSalesBucket().put(productId, changedValue);
+     //   }
+      //  else salesOrderDto.getSalesBucket().remove(productId);
         return salesOrderDto;
     }
 

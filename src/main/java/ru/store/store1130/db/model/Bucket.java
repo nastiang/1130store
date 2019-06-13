@@ -6,16 +6,21 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "order_status")
+@Table(name = "bucket")
 @Data
 @Accessors(chain = true)
-public class OrderStatus {
+public class Bucket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
 
-    @Column(name = "name_of_status")
-    private String nameOfStatus;
+    @Column
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "product_id", referencedColumnName = "id" )
+    private Product product;
+
+    @Column(name = "value")
+    private Integer value;
 
 }
