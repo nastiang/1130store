@@ -100,10 +100,10 @@
                                  referencedColumnNames="id"/>
     </changeSet>
     
-    <changeSet id="11" author="Anastasia Shapovalova">
+<!--    <changeSet id="11" author="Anastasia Shapovalova">
         <addForeignKeyConstraint baseTableName="order"
-                                 baseColumnNames="order_status_id"
-                                 constraintName="order_order_status_id_fk"
+                                 baseColumnNames="order_status"
+                                 constraintName="order_order_status_fk"
                                  referencedTableName="order_status"
                                  referencedColumnNames="id"/>
     </changeSet>
@@ -114,7 +114,7 @@
                                  constraintName="order_order_category_id_fk"
                                  referencedTableName="order_category"
                                  referencedColumnNames="id"/>
-    </changeSet>
+    </changeSet>-->
     
     <changeSet id="13" author="Anastasia Shapovalova">
         <addForeignKeyConstraint baseTableName="product"
@@ -152,6 +152,30 @@
                                  constraintName="usr_role_id_fk"
                                  referencedTableName="user_role"
                                  referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="18" author="Artem">
+        <renameColumn tableName="sales_order" oldColumnName="order_status" newColumnName="order_status_id" />
+    </changeSet>
+
+    <changeSet id="19" author="Artem">
+        <modifyDataType tableName="sales_order" columnName="order_status_id" newDataType="bigint" />
+    </changeSet>
+
+    <changeSet id="20" author="Artem">
+        <addForeignKeyConstraint baseTableName="sales_order"
+                                 baseColumnNames="order_status_id"
+                                 constraintName="sales_order_order_status_id_fk"
+                                 referencedTableName="order_status"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="21" author="Artem">
+        <addForeignKeyConstraint baseTableName="sales_order"
+                                 baseColumnNames="order_category_id"
+                                 constraintName="sales_order_order_category_id_fk"
+                                 referencedTableName="order_category"
+                                 referencedColumnNames="id"/>
     </changeSet>
 
 </databaseChangeLog>

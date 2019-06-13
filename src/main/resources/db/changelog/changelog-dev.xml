@@ -2,4 +2,104 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <include file="db/changelog/schema/schema.xml"/>
 
+    <changeSet id="1" author="Artem">
+        <insert tableName="product_category">
+            <column name="id" valueNumeric="1"/>
+            <column name="name_of_product_category" value="Шляпы"/>
+        </insert>
+        <insert tableName="product_category">
+            <column name="id" valueNumeric="2"/>
+            <column name="name_of_product_category" value="Платья"/>
+        </insert>
+        <insert tableName="product_category">
+            <column name="id" valueNumeric="3"/>
+            <column name="name_of_product_category" value="Аксессуары"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2" author="Artem">
+        <insert tableName="order_category">
+            <column name="id" valueNumeric="1"/>
+            <column name="name_of_category" value="Instagram"/>
+        </insert>
+        <insert tableName="order_category">
+            <column name="id" valueNumeric="2"/>
+            <column name="name_of_category" value="VK"/>
+        </insert>
+        <insert tableName="order_category">
+            <column name="id" valueNumeric="3"/>
+            <column name="name_of_category" value="Telegram"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="3" author="Artem">
+        <insert tableName="product">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Панамка"/>
+            <column name="price" valueNumeric="1053"/>
+            <column name="cost" valueNumeric="982"/>
+            <column name="product_category_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="product">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Серьги"/>
+            <column name="price" valueNumeric="3333"/>
+            <column name="cost" valueNumeric="2766"/>
+            <column name="product_category_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="product">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Сарафан"/>
+            <column name="price" valueNumeric="1600"/>
+            <column name="cost" valueNumeric="1200"/>
+            <column name="product_category_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="4" author="Artem">
+        <insert tableName="user_role">
+            <column name="id" valueNumeric="1"/>
+            <column name="name_of_role" value="MODER"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="id" valueNumeric="2"/>
+            <column name="name_of_role" value="USER"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="5" author="Artem">
+        <insert tableName="usr">
+            <column name="id" valueNumeric="1"/>
+            <column name="email" value="artem@storchak.ru"/>
+            <column name="password" valueNumeric="123"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="usr">
+            <column name="id" valueNumeric="2"/>
+            <column name="email" value="anastasia@shapovalova.ru"/>
+            <column name="password" valueNumeric="321"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="usr">
+            <column name="id" valueNumeric="3"/>
+            <column name="email" value="maksim@popov.ru"/>
+            <column name="password" valueNumeric="213"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+<!--    <changeSet id="6" author="Artem">
+        <insert tableName="sales_order">
+            <column name="id" valueNumeric="1"/>
+            <column name="date" valueDate="12.06.2019 21:28:00"/>
+            <column name="sum" valueNumeric="1600"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="order_category" valueNumeric="2"/>
+            <column name="order_type" valueNumeric="2"/>
+        </insert>
+    </changeSet>-->
+
 </databaseChangeLog>
