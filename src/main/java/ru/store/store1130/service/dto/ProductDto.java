@@ -15,5 +15,6 @@ public class ProductDto {
     private String nameOfProduct;
     private BigDecimal price;
     private BigDecimal cost;
+    private int count;
     private ProductCategory productCategory;
 }

@@ -147,11 +147,17 @@
     </changeSet>
 
     <changeSet id="11" author="Anastasia Shapovalova">
-        <addForeignKeyConstraint baseTableName="order"
+        <addForeignKeyConstraint baseTableName="salea_order"
                                  baseColumnNames="order_status_id"
                                  constraintName="order_order_status_id_fk"
                                  referencedTableName="order_status"
                                  referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="18" author="Anastasia Shapovalova">
+        <addColumn tableName="product">
+            <column name="count" type="int"></column>
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

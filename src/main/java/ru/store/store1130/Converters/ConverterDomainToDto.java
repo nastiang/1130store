@@ -1,18 +1,21 @@
-package ru.store.store1130.web;
+package ru.store.store1130.Converters;
 
+import org.springframework.stereotype.Component;
 import ru.store.store1130.db.model.*;
 import ru.store.store1130.service.dto.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
+@Component
 public class ConverterDomainToDto {
-    public Order convertToDomain(OrderDto orderDto){
-        Order order = new Order();
+    public SalesOrder convertToDomain(SalesOrderDto orderDto){
+        SalesOrder order = new SalesOrder();
         order.setId(orderDto.getId());
         order.setDate(orderDto.getDate());
         order.setOrderCategory(orderDto.getOrderCategory());
-        order.setProduct(orderDto.getProduct());
+        order.setSalesBucket(orderDto.getSalesBucket());
         order.setStatus(orderDto.getStatus());
         order.setSum(orderDto.getSum());
         order.setUser(orderDto.getUser());
@@ -20,12 +23,12 @@ public class ConverterDomainToDto {
         return order;
     }
 
-    public OrderDto convertToDto(Order order){
-        OrderDto orderDto = new OrderDto();
+    public SalesOrderDto convertToDto(SalesOrder order){
+        SalesOrderDto orderDto = new SalesOrderDto();
         orderDto.setId(order.getId());
         orderDto.setDate(order.getDate());
         orderDto.setOrderCategory(order.getOrderCategory());
-        orderDto.setProduct(order.getProduct());
+        orderDto.setSalesBucket(order.getSalesBucket());
         orderDto.setStatus(order.getStatus());
         orderDto.setSum(order.getSum());
         orderDto.setUser(order.getUser());
@@ -33,22 +36,32 @@ public class ConverterDomainToDto {
         return  orderDto;
     }
 
-    public List<Order> convertToDomain(List<OrderDto> orderDtos){
-        List<Order> orderList = new ArrayList<>();
+    public List<SalesOrder> convertToDomain(List<SalesOrderDto> orderDtos){
+        List<SalesOrder> orderList = new ArrayList<>();
         ConverterDomainToDto converterDomainToDto = new ConverterDomainToDto();
-        for (OrderDto orderDto1 : orderDtos){
+        for (SalesOrderDto orderDto1 : orderDtos){
             orderList.add(converterDomainToDto.convertToDomain(orderDto1));
         }
         return orderList;
     }
 
-    public List<OrderDto> convertToDto(List<Order> orders){
-        List<OrderDto> orderDtoList = new ArrayList<>();
+    public List<SalesOrderDto> convertToDto(List<SalesOrder> orders){
+        List<SalesOrderDto> orderDtoList = new ArrayList<>();
         ConverterDomainToDto converterDomainToDto = new ConverterDomainToDto();
-        for (Order order1 : orders){
+        for (SalesOrder order1 : orders){
             orderDtoList.add(converterDomainToDto.convertToDto(order1));
         }
         return orderDtoList;
+    }
+
+    public LinkedHashMap<Long,Integer> convertToDomain(LinkedHashMap<Long,Integer> salesOrderDtoLinkedHashMap) {
+        LinkedHashMap<Long, Integer> domainLinkedHashMap = (LinkedHashMap)salesOrderDtoLinkedHashMap.clone();
+        return domainLinkedHashMap;
+    }
+
+    public LinkedHashMap<Long,Integer> convertToDto(LinkedHashMap<Long,Integer> salesOrderLinkedHashMap) {
+        LinkedHashMap<Long, Integer> dtoLinkedHashMap = (LinkedHashMap)salesOrderLinkedHashMap.clone();
+        return dtoLinkedHashMap;
     }
 
     public OrderCategory convertToDomain(OrderCategoryDto orderCategoryDto){

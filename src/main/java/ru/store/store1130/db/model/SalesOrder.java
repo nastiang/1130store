@@ -7,12 +7,14 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 @Entity
 @Table(name = "sales_order")
 @Data
 @Accessors(chain = true)
-public class Order {
+public class SalesOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +32,9 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "id" )
     private User user;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
+    private LinkedHashMap<Long,Integer> salesBucket;
 
     @ManyToOne
     @JoinColumn(name = "order_status_id", referencedColumnName = "id")
@@ -41,6 +43,5 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "order_category_id", referencedColumnName = "id")
     private OrderCategory orderCategory;
-
 
 }
