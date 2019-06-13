@@ -15,7 +15,7 @@ public class ConverterDomainToDto {
         order.setId(orderDto.getId());
         order.setDate(orderDto.getDate());
         order.setOrderCategory(orderDto.getOrderCategory());
-        order.setSalesBucket(orderDto.getSalesBucket());
+        order.setBucket(orderDto.getBucket());
         order.setStatus(orderDto.getStatus());
         order.setSum(orderDto.getSum());
         order.setUser(orderDto.getUser());
@@ -28,7 +28,7 @@ public class ConverterDomainToDto {
         orderDto.setId(order.getId());
         orderDto.setDate(order.getDate());
         orderDto.setOrderCategory(order.getOrderCategory());
-        orderDto.setSalesBucket(order.getSalesBucket());
+        orderDto.setBucket(order.getBucket());
         orderDto.setStatus(order.getStatus());
         orderDto.setSum(order.getSum());
         orderDto.setUser(order.getUser());
@@ -93,6 +93,21 @@ public class ConverterDomainToDto {
         orderStatusDto.setNameOfStatus(orderStatus.getNameOfStatus());
 
         return orderStatusDto;
+    }
+
+    public BucketDto convertToDto(Bucket bucket){
+        BucketDto bucketDto = new BucketDto();
+        bucketDto.setId(bucket.getId());
+        bucketDto.setProduct(bucket.getProduct());
+        bucketDto.setValue(bucket.getValue());
+        return bucketDto;
+    }
+
+    public Bucket convertToDomain(BucketDto bucketDto){
+        Bucket bucket = new Bucket();
+        bucket.setId(bucketDto.getId());
+        bucket.setProduct(bucket.getProduct());
+        bucket.setValue(bucket.getValue());
     }
 
     public Product convertToDomain(ProductDto productDto){

@@ -32,13 +32,13 @@ public class SalesOrder {
     @JoinColumn(name = "user_id", referencedColumnName = "id" )
     private User user;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private LinkedHashMap<Long,Integer> salesBucket;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bucket_id", referencedColumnName = "id")
+    private Bucket bucket;
 
-    @ManyToOne
-    @JoinColumn(name = "order_status_id", referencedColumnName = "id")
-    private OrderStatus status;
+    @Column(name = "order_status")
+    @Enumerated(EnumType.STRING)
+    private SalesOrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "order_category_id", referencedColumnName = "id")

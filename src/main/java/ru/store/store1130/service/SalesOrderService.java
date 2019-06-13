@@ -2,8 +2,6 @@ package ru.store.store1130.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ru.store.store1130.db.model.OrderStatus;
-import ru.store.store1130.db.model.SalesOrder;
 import ru.store.store1130.service.dto.SalesOrderDto;
 
 import java.time.LocalDate;

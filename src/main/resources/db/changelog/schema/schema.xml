@@ -147,7 +147,7 @@
     </changeSet>
 
     <changeSet id="11" author="Anastasia Shapovalova">
-        <addForeignKeyConstraint baseTableName="salea_order"
+        <addForeignKeyConstraint baseTableName="sales_order"
                                  baseColumnNames="order_status_id"
                                  constraintName="order_order_status_id_fk"
                                  referencedTableName="order_status"
@@ -158,6 +158,39 @@
         <addColumn tableName="product">
             <column name="count" type="int"></column>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="19" author="Anastasia Shapovalova">
+        <createTable tableName="bucket">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="bucket_pkey" nullable="false"/>
+            </column>
+            <column name="product_id" type="BIGSERIAL"/>
+            <column name="value" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20" author="Anastasia Shapovalova">
+        <renameColumn tableName="sales_order" oldColumnName="product_id" newColumnName="bucket_id"/>
+    </changeSet>
+
+    <changeSet id="21" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="sales_order"
+                                 baseColumnNames="bucket_id"
+                                 constraintName="sales_order_bucket_id_fk"
+                                 referencedTableName="bucket"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="22" author="Anastasia Shapovalova">
+        <dropColumn tableName="sales_order" columnName="order_status_id"/>
+        <addColumn tableName="sales_order">
+            <column name="order_status" type="VARCHAR(255)"></column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="23" author="Anastasia Shapovalova">
+        <dropTable tableName="order_status"/>
     </changeSet>
 
 </databaseChangeLog>
