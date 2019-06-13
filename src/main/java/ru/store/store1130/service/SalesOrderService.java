@@ -2,6 +2,7 @@ package ru.store.store1130.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import ru.store.store1130.db.model.SalesOrderStatus;
 import ru.store.store1130.service.dto.SalesOrderDto;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ public interface SalesOrderService {
     Page<SalesOrderDto> getAllOrder(Pageable pageable, String sortBy, String filter, String filterParam);
     SalesOrderDto getOne(Long id);
     void create(SalesOrderDto salesOrderDto);
-    SalesOrderDto update(SalesOrderDto salesOrderDto, OrderStatus orderStatus);
+    SalesOrderDto update(SalesOrderDto salesOrderDto, SalesOrderStatus salesOrderStatus);
     void delete(Long id);
     List<SalesOrderDto> findByOrderCategory(Long orderCategoryId);
     List<SalesOrderDto> findByOrderStatus(Long orderStatusId);

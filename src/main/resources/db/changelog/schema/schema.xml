@@ -193,4 +193,28 @@
         <dropTable tableName="order_status"/>
     </changeSet>
 
+    <changeSet id="24" author="Anastasia Shapovalova">
+        <dropColumn tableName="bucket" columnName="value"/>
+        <addColumn tableName="bucket">
+            <column name="sales_order_id" type="BIGSERIAL"></column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="25" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="bucket"
+                                 baseColumnNames="sales_order_id"
+                                 constraintName="sales_order_id_fk"
+                                 referencedTableName="sales_order"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="26" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="bucket"
+                                 baseColumnNames="product_id"
+                                 constraintName="product_id_fk"
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+
 </databaseChangeLog>

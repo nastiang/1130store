@@ -17,7 +17,7 @@ public class SalesOrderDto {
     private BigDecimal sum;
     private User user;
     private Bucket bucket;
-    private OrderStatus status;
+    private SalesOrderStatus status;
     private OrderCategory orderCategory;
 
 }

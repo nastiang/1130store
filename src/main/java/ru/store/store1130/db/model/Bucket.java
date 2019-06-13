@@ -20,7 +20,10 @@ public class Bucket {
     @JoinColumn(name = "product_id", referencedColumnName = "id" )
     private Product product;
 
-    @Column(name = "value")
-    private Integer value;
+
+    @Column
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "sales_order_id", referencedColumnName = "id")
+    private SalesOrder salesOrder;
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.store.store1130.db.model.Product;
 import ru.store.store1130.db.model.SalesOrder;
+import ru.store.store1130.db.model.SalesOrderStatus;
 import ru.store.store1130.db.repository.BucketRepository;
 import ru.store.store1130.db.repository.ProductRepository;
 import ru.store.store1130.db.repository.SalesOrderReposirory;
@@ -46,7 +47,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     }
 
     @Override
-    public SalesOrderDto update(SalesOrderDto salesOrderDto, OrderStatus orderStatus) {
+    public SalesOrderDto update(SalesOrderDto salesOrderDto, SalesOrderStatus salesOrderStatus) {
         SalesOrder salesOrder = converterDomainToDto.convertToDomain(salesOrderDto);
 
       return converterDomainToDto.convertToDto(salesOrderReposirory.save(salesOrder));
@@ -90,10 +91,11 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     @Override
     public SalesOrderDto addToBucket(SalesOrderDto salesOrderDto, Long productId, int value) {
-        BucketDto bucketDto = new BucketDto();
-        bucketDto.setProduct(productRepository.findById(productId).orElse(new Product())).setValue(value);
-        bucketRepository.save(converterDomainToDto.convertToDomain(bucketDto));
-        return salesOrderDto.setBucket(converterDomainToDto.convertToDomain(bucketDto));
+      //  BucketDto bucketDto = new BucketDto();
+        //bucketDto.setProduct(productRepository.findById(productId).orElse(new Product())).setValue(value);
+        //bucketRepository.save(converterDomainToDto.convertToDomain(bucketDto));
+        //return salesOrderDto.setBucket(converterDomainToDto.convertToDomain(bucketDto));
+        return null;
     }
 
     @Override
