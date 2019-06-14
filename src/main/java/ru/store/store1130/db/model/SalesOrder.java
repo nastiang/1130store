@@ -2,18 +2,21 @@ package ru.store.store1130.db.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
+
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
-
+@Accessors(chain = true)
 @Entity
 @Table(name = "sales_order")
 @Data
-@Accessors(chain = true)
+
 public class SalesOrder {
 
     @Id
