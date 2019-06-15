@@ -216,5 +216,16 @@
                                  referencedColumnNames="id"/>
     </changeSet>
 
+    <changeSet id="27" author="Anastasia Shapovalova">
+        <renameTable oldTableName="bucket" newTableName="product_in_order"/>
+    </changeSet>
+
+    <changeSet id="28" author="Anastasia Shapovalova">
+        <addColumn tableName="product_in_order">
+            <column name="quantity" type="int"></column>
+        </addColumn>
+    </changeSet>
+
+
 
 </databaseChangeLog>

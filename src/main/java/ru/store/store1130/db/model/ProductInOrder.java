@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "bucket")
 @Data
 
-public class Bucket {
+public class ProductInOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -27,5 +27,8 @@ public class Bucket {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "sales_order_id", referencedColumnName = "id")
     private SalesOrder salesOrder;
+
+    @Column
+    private int quantity;
 
 }

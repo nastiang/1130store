@@ -17,8 +17,8 @@ public class SalesOrderDto {
     private LocalDateTime date;
     private BigDecimal sum;
     private User user;
-    private Bucket bucket;
     private SalesOrderStatus status;
+    private List<ProductInOrder> productInOrders;
     private OrderCategory orderCategory;
 
 }

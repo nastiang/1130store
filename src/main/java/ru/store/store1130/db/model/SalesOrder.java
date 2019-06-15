@@ -35,9 +35,9 @@ public class SalesOrder {
     @JoinColumn(name = "user_id", referencedColumnName = "id" )
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bucket_id", referencedColumnName = "id")
-    private Bucket bucket;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_in_order_id", referencedColumnName = "id")
+    private List<ProductInOrder> productInOrders;
 
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)

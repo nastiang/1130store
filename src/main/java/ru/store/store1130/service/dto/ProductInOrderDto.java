@@ -10,9 +10,10 @@ import ru.store.store1130.db.model.SalesOrder;
 @Accessors(chain = true)
 @Data
 
-public class BucketDto {
+public class ProductInOrderDto {
     private Long id;
     private Product product;
     private SalesOrder salesOrder;
+    private int quantity;
 
 }

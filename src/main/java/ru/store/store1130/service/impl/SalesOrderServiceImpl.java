@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import ru.store.store1130.db.model.Product;
 import ru.store.store1130.db.model.SalesOrder;
 import ru.store.store1130.db.model.SalesOrderStatus;
-import ru.store.store1130.db.repository.BucketRepository;
+import ru.store.store1130.db.repository.ProductInOrderRepository;
 import ru.store.store1130.db.repository.ProductRepository;
 import ru.store.store1130.db.repository.SalesOrderReposirory;
 import ru.store.store1130.service.SalesOrderService;
-import ru.store.store1130.service.dto.BucketDto;
+import ru.store.store1130.service.dto.ProductInOrderDto;
 import ru.store.store1130.service.dto.SalesOrderDto;
 import ru.store.store1130.Converters.ConverterDomainToDto;
 
@@ -28,7 +28,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Autowired
     ProductRepository productRepository;
     @Autowired
-    BucketRepository bucketRepository;
+    ProductInOrderRepository productInOrderRepository;
 
     @Override
     public Page<SalesOrderDto> getAllOrder(Pageable pageable, String sortBy, String filter, String filterParam) {
