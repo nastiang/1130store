@@ -1,15 +1,18 @@
 package ru.store.store1130.db.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
+
 
 import javax.persistence.*;
 import java.util.Set;
-
+@Accessors(chain = true)
 @Entity
 @Table(name = "usr")
 @Data
-@Accessors(chain = true)
+
 public class User {
 
     @Id

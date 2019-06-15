@@ -15,7 +15,7 @@ public class ConverterDomainToDto {
         order.setId(orderDto.getId());
         order.setDate(orderDto.getDate());
         order.setOrderCategory(orderDto.getOrderCategory());
-        order.setBucket(orderDto.getBucket());
+        order.setProductInOrders(orderDto.getProductInOrders());
         order.setStatus(orderDto.getStatus());
         order.setSum(orderDto.getSum());
         order.setUser(orderDto.getUser());
@@ -27,7 +27,7 @@ public class ConverterDomainToDto {
         orderDto.setId(order.getId());
         orderDto.setDate(order.getDate());
         orderDto.setOrderCategory(order.getOrderCategory());
-        orderDto.setBucket(order.getBucket());
+        orderDto.setProductInOrders(order.getProductInOrders());
         orderDto.setStatus(order.getStatus());
         orderDto.setSum(order.getSum());
         orderDto.setUser(order.getUser());
@@ -78,20 +78,20 @@ public class ConverterDomainToDto {
         return orderCategoryDto;
     }
 
-    public BucketDto convertToDto(Bucket bucket){
-        BucketDto bucketDto = new BucketDto();
-        bucketDto.setId(bucket.getId());
-        bucketDto.setProduct(bucket.getProduct());
-        bucketDto.setSalesOrder(bucket.getSalesOrder());
-        return bucketDto;
+    public ProductInOrderDto convertToDto(ProductInOrder productInOrder){
+        ProductInOrderDto productInOrderDto = new ProductInOrderDto();
+        productInOrderDto.setId(productInOrder.getId());
+        productInOrderDto.setProduct(productInOrder.getProduct());
+        productInOrderDto.setSalesOrder(productInOrder.getSalesOrder());
+        return productInOrderDto;
     }
 
-    public Bucket convertToDomain(BucketDto bucketDto){
-        Bucket bucket = new Bucket();
-        bucket.setId(bucketDto.getId());
-        bucket.setProduct(bucket.getProduct());
-        bucket.setSalesOrder(bucketDto.getSalesOrder());
-        return bucket;
+    public ProductInOrder convertToDomain(ProductInOrderDto productInOrderDto){
+        ProductInOrder productInOrder = new ProductInOrder();
+        productInOrder.setId(productInOrderDto.getId());
+        productInOrder.setProduct(productInOrderDto.getProduct());
+        productInOrder.setSalesOrder(productInOrderDto.getSalesOrder());
+        return productInOrder;
     }
 
     public Product convertToDomain(ProductDto productDto){

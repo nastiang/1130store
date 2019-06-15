@@ -2,18 +2,21 @@ package ru.store.store1130.db.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
+
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
-
+@Accessors(chain = true)
 @Entity
 @Table(name = "sales_order")
 @Data
-@Accessors(chain = true)
+
 public class SalesOrder {
 
     @Id
@@ -32,9 +35,9 @@ public class SalesOrder {
     @JoinColumn(name = "user_id", referencedColumnName = "id" )
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bucket_id", referencedColumnName = "id")
-    private Bucket bucket;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_in_order_id", referencedColumnName = "id")
+    private List<ProductInOrder> productInOrders;
 
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)
