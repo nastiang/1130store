@@ -1,15 +1,21 @@
 package ru.store.store1130.db.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
+
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
+@Accessors(chain = true)
 @Entity
 @Table(name = "product")
 @Data
-@Accessors(chain = true)
+
 
 public class Product {
 
@@ -27,7 +33,11 @@ public class Product {
     @Column(name = "cost")
     private BigDecimal cost;
 
+    @Column(name = "count")
+    private int count;
+
     @ManyToOne
     @JoinColumn(name = "product_category_id", referencedColumnName = "id")
     private ProductCategory productCategory;
+
 }
