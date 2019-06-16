@@ -9,10 +9,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Accessors(chain = true)
 @Entity
 @Table(name = "sales_order")
 @Data
-@Accessors(chain = true)
+
 public class SalesOrder {
 
     @Id
@@ -31,13 +32,13 @@ public class SalesOrder {
     @JoinColumn(name = "user_id", referencedColumnName = "id" )
     private User user;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private List<Product> productList;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_in_order_id", referencedColumnName = "id")
+    private List<ProductInOrder> productInOrders;
 
-    @ManyToOne
-    @JoinColumn(name = "order_status_id", referencedColumnName = "id")
-    private OrderStatus status;
+    @Column(name = "order_status")
+    @Enumerated(EnumType.STRING)
+    private SalesOrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "order_category_id", referencedColumnName = "id")

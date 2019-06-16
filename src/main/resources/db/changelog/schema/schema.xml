@@ -99,7 +99,6 @@
                                  referencedTableName="product"
                                  referencedColumnNames="id"/>
     </changeSet>
-    
 <!--    <changeSet id="11" author="Anastasia Shapovalova">
         <addForeignKeyConstraint baseTableName="order"
                                  baseColumnNames="order_status"
@@ -108,6 +107,9 @@
                                  referencedColumnNames="id"/>
     </changeSet>
     
+=======
+
+>>>>>>> 7a88530dabf3b1b582466d50b42e8a95c3b94a3c
     <changeSet id="12" author="Anastasia Shapovalova">
         <addForeignKeyConstraint baseTableName="order"
                                  baseColumnNames="order_category_id"
@@ -176,6 +178,81 @@
                                  constraintName="sales_order_order_category_id_fk"
                                  referencedTableName="order_category"
                                  referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="22" author="Anastasia Shapovalova">
+        <addColumn tableName="product">
+            <column name="count" type="int"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="23" author="Anastasia Shapovalova">
+        <createTable tableName="bucket">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="bucket_pkey" nullable="false"/>
+            </column>
+            <column name="product_id" type="BIGSERIAL"/>
+            <column name="value" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="24" author="Anastasia Shapovalova">
+        <renameColumn tableName="sales_order" oldColumnName="product_id" newColumnName="bucket_id"/>
+    </changeSet>
+
+    <changeSet id="25" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="sales_order"
+                                 baseColumnNames="bucket_id"
+                                 constraintName="sales_order_bucket_id_fk"
+                                 referencedTableName="bucket"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="26" author="Anastasia Shapovalova">
+        <dropColumn tableName="sales_order" columnName="order_status_id"/>
+        <addColumn tableName="sales_order">
+            <column name="order_status" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="27" author="Anastasia Shapovalova"/>
+
+    <changeSet id="28" author="Anastasia Shapovalova">
+        <dropColumn tableName="bucket" columnName="value"/>
+        <addColumn tableName="bucket">
+            <column name="sales_order_id" type="BIGSERIAL"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="29" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="bucket"
+                                 baseColumnNames="sales_order_id"
+                                 constraintName="sales_order_id_fk"
+                                 referencedTableName="sales_order"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="30" author="Anastasia Shapovalova">
+        <addForeignKeyConstraint baseTableName="bucket"
+                                 baseColumnNames="product_id"
+                                 constraintName="product_id_fk"
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="31" author="Anastasia Shapovalova">
+        <renameTable oldTableName="bucket" newTableName="product_in_order"/>
+    </changeSet>
+
+    <changeSet id="32" author="Anastasia Shapovalova">
+        <addColumn tableName="product_in_order">
+            <column name="quantity" type="int"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="33" author="Artem">
+        <dropForeignKeyConstraint baseTableName="sales_order"
+                                  constraintName="sales_order_bucket_id_fk"/>
     </changeSet>
 
 </databaseChangeLog>
