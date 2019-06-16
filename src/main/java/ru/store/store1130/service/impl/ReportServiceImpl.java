@@ -1,14 +1,17 @@
 package ru.store.store1130.service.impl;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicateBuilder;
 import org.springframework.stereotype.Service;
 import ru.store.store1130.db.model.SalesOrder;
+import ru.store.store1130.db.model.Views;
 import ru.store.store1130.service.ReportService;
 import ru.store.store1130.service.SalesOrderService;
 import ru.store.store1130.service.dto.ProductReportDto;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +28,17 @@ public class ReportServiceImpl implements ReportService {
         List<SalesOrder> allOrders = salesOrderService.findAll();
         List<ProductReportDto> allProductReports = new ArrayList<>();
 
-        QuerydslPredicateBuilder query = new QuerydslPredicateBuilder();
-
         for (SalesOrder order : allOrders) {
+            ProductReportDto dto = new ProductReportDto();
+            dto.setData(order.getDate());
+            dto.setUser(order.getUser());
+            dto.setProducts(order.getProducts());
+            dto.setSum(order.getSum());
+            dto.setProfit(new BigDecimal(123));
+
+            allProductReports.add(dto);
         }
 
-        return null;
+        return allProductReports;
     }
 }

@@ -1,6 +1,8 @@
 package ru.store.store1130.db.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,6 +15,10 @@ import java.util.List;
 @Entity
 @Table(name = "sales_order")
 @Data
+@JsonIdentityInfo(
+        property = "id",
+        generator = ObjectIdGenerators.PropertyGenerator.class
+)
 public class SalesOrder {
 
     @Id
