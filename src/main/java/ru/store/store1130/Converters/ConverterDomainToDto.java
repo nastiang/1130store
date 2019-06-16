@@ -15,11 +15,7 @@ public class ConverterDomainToDto {
         order.setId(orderDto.getId());
         order.setDate(orderDto.getDate());
         order.setOrderCategory(orderDto.getOrderCategory());
-<<<<<<< HEAD:src/main/java/ru/store/store1130/Converters/ConverterDomainToDto.java
-        order.setProductList(orderDto.getProductList());
-=======
-        order.setProductInOrders(orderDto.getProductInOrders());
->>>>>>> master:src/main/java/ru/store/store1130/Converters/ConverterDomainToDto.java
+        order.setProducts(orderDto.getProductList());
         order.setStatus(orderDto.getStatus());
         order.setSum(orderDto.getSum());
         order.setUser(orderDto.getUser());
@@ -31,11 +27,7 @@ public class ConverterDomainToDto {
         orderDto.setId(order.getId());
         orderDto.setDate(order.getDate());
         orderDto.setOrderCategory(order.getOrderCategory());
-<<<<<<< HEAD:src/main/java/ru/store/store1130/Converters/ConverterDomainToDto.java
-        orderDto.setProductList(order.getProductList());
-=======
-        orderDto.setProductInOrders(order.getProductInOrders());
->>>>>>> master:src/main/java/ru/store/store1130/Converters/ConverterDomainToDto.java
+        orderDto.setProductList(order.getProducts());
         orderDto.setStatus(order.getStatus());
         orderDto.setSum(order.getSum());
         orderDto.setUser(order.getUser());

@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @Table(name = "sales_order")
 @Data
-
 public class SalesOrder {
 
     @Id
@@ -32,9 +31,13 @@ public class SalesOrder {
     @JoinColumn(name = "user_id", referencedColumnName = "id" )
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_in_order_id", referencedColumnName = "id")
-    private List<ProductInOrder> productInOrders;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "product_in_order",
+            joinColumns = { @JoinColumn(name = "sales_order_id")},
+            inverseJoinColumns = { @JoinColumn(name = "product_id")}
+    )
+    private List<Product> products;
 
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)

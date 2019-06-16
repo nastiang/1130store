@@ -9,9 +9,11 @@ import ru.store.store1130.db.model.SalesOrder;
 import ru.store.store1130.db.model.SalesOrderStatus;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface SalesOrderReposirory extends JpaRepository<SalesOrder, Long> {
+    List<SalesOrder> findAll();
     Optional<SalesOrder> findById(Long id);
     Page<SalesOrder> findByDate(Pageable pageable, LocalDateTime date);
     Page<SalesOrder> findByOrderCategory(Pageable pageable, OrderCategory orderCategory);
