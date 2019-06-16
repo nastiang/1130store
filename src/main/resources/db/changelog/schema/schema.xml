@@ -250,6 +250,9 @@
         </addColumn>
     </changeSet>
 
-
+    <changeSet id="33" author="Artem">
+        <dropForeignKeyConstraint baseTableName="sales_order"
+                                  constraintName="sales_order_bucket_id_fk"/>
+    </changeSet>
 
 </databaseChangeLog>
