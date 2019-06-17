@@ -53,4 +53,6 @@ public class SalesOrder {
     @JoinColumn(name = "order_category_id", referencedColumnName = "id")
     private OrderCategory orderCategory;
 
+    @Column(name = "order_type")
+    private OrderType orderType;
 }
