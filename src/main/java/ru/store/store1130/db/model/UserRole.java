@@ -1,5 +1,6 @@
 package ru.store.store1130.db.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -17,6 +18,7 @@ public class UserRole {
     private Long id;
 
     @Column(name = "name_of_role")
+    @JsonView(Views.NoOrders.class)
     private String nameOfRole;
 
 

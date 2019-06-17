@@ -1,13 +1,17 @@
 package ru.store.store1130.web;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import ru.store.store1130.db.model.*;
 import ru.store.store1130.service.dto.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ConverterDomainToDto {
     public Order convertToDomain(OrderDto orderDto){
+
         Order order = new Order();
         order.setId(orderDto.getId());
         order.setDate(orderDto.getDate());
@@ -21,6 +25,7 @@ public class ConverterDomainToDto {
     }
 
     public OrderDto convertToDto(Order order){
+
         OrderDto orderDto = new OrderDto();
         orderDto.setId(order.getId());
         orderDto.setDate(order.getDate());
@@ -119,6 +124,7 @@ public class ConverterDomainToDto {
 
         return productCategoryDto;
     }
+
 
     public User convertToDomain(UserDto userDto){
         User user = new User();

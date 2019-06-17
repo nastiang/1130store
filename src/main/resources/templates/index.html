@@ -2,8 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <script th:inline="javascript">
-        var allProductCategory = [# th:utext="${allProductCategory}" /];
-        var allOrderCategory = [# th:utext="${allOrderCategory}" /];
+        var allProductCategory = [;
+        #
+        utext = "${allProductCategory}" /;
+        ]
+        var allOrderCategory = [;
+        #
+        utext = "${allOrderCategory}" /;
+        ]
     </script>
 </head>
 <body>
