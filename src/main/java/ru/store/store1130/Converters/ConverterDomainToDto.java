@@ -10,12 +10,22 @@ import java.util.List;
 
 @Component
 public class ConverterDomainToDto {
+    public ProductReportDto convertToDomain(SalesOrder salesOrder) {
+        ProductReportDto dto = new ProductReportDto();
+        dto.setDate(salesOrder.getDate());
+        dto.setUser(salesOrder.getUser());
+        dto.setProducts(salesOrder.getProducts());
+        dto.setSum(salesOrder.getSum());
+
+        return dto;
+    }
+
     public SalesOrder convertToDomain(SalesOrderDto orderDto){
         SalesOrder order = new SalesOrder();
         order.setId(orderDto.getId());
         order.setDate(orderDto.getDate());
         order.setOrderCategory(orderDto.getOrderCategory());
-        order.setProductInOrders(orderDto.getProductInOrders());
+        order.setProducts(orderDto.getProductList());
         order.setStatus(orderDto.getStatus());
         order.setSum(orderDto.getSum());
         order.setUser(orderDto.getUser());
@@ -27,7 +37,7 @@ public class ConverterDomainToDto {
         orderDto.setId(order.getId());
         orderDto.setDate(order.getDate());
         orderDto.setOrderCategory(order.getOrderCategory());
-        orderDto.setProductInOrders(order.getProductInOrders());
+        orderDto.setProductList(order.getProducts());
         orderDto.setStatus(order.getStatus());
         orderDto.setSum(order.getSum());
         orderDto.setUser(order.getUser());

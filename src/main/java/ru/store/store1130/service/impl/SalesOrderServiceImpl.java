@@ -4,19 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.store.store1130.db.model.Product;
+import ru.store.store1130.Converters.ConverterDomainToDto;
+import ru.store.store1130.db.model.OrderCategory;
 import ru.store.store1130.db.model.SalesOrder;
 import ru.store.store1130.db.model.SalesOrderStatus;
 import ru.store.store1130.db.repository.ProductInOrderRepository;
 import ru.store.store1130.db.repository.ProductRepository;
 import ru.store.store1130.db.repository.SalesOrderReposirory;
 import ru.store.store1130.service.SalesOrderService;
-import ru.store.store1130.service.dto.ProductInOrderDto;
 import ru.store.store1130.service.dto.SalesOrderDto;
-import ru.store.store1130.Converters.ConverterDomainToDto;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Service
 public class SalesOrderServiceImpl implements SalesOrderService {
@@ -31,13 +29,17 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     ProductInOrderRepository productInOrderRepository;
 
     @Override
+    public Page<SalesOrder> findAll(Pageable pageable) {
+        return salesOrderReposirory.findAll(pageable);
+    }
+
+    @Override
     public Page<SalesOrderDto> getAllOrder(Pageable pageable, String sortBy, String filter, String filterParam) {
         return null;
     }
 
     @Override
     public SalesOrderDto getOne(Long id) {
-
         return converterDomainToDto.convertToDto(salesOrderReposirory.getOne(id));
     }
 
@@ -49,44 +51,46 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Override
     public SalesOrderDto update(SalesOrderDto salesOrderDto, SalesOrderStatus salesOrderStatus) {
         SalesOrder salesOrder = converterDomainToDto.convertToDomain(salesOrderDto);
-
       return converterDomainToDto.convertToDto(salesOrderReposirory.save(salesOrder));
     }
 
     @Override
     public void delete(Long id) {
-        SalesOrder salesOrder = salesOrderReposirory.findOne(id);
+        SalesOrder salesOrder = salesOrderReposirory.findById(id).get();
         if (salesOrder == null){
             return;
         }
-        salesOrderReposirory.delete(id);
+        salesOrderReposirory.delete(salesOrder);
     }
 
+
     @Override
-    public List<SalesOrderDto> findByOrderCategory(Long orderCategoryId) {
+    public Page<SalesOrderDto> findByOrderCategory(Pageable pageable, OrderCategory orderCategory) {
         return
-        converterDomainToDto.convertToDto(salesOrderReposirory.findByOrderCategory(orderCategoryId));
+                (Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByOrderCategory(pageable, orderCategory).getContent());
 
     }
 
     @Override
-    public List<SalesOrderDto> findByOrderStatus(Long orderStatusId) {
-        return converterDomainToDto.convertToDto(salesOrderReposirory.findByOrderStatus(orderStatusId));
+    public Page<SalesOrderDto> findByStatus(Pageable pageable, SalesOrderStatus salesOrderStatus) {
+        return (Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByStatus(pageable, salesOrderStatus).getContent());
     }
 
     @Override
-    public List<SalesOrderDto> findByProduct(Long productStatusId) {
-        return converterDomainToDto.convertToDto(salesOrderReposirory.findByProduct(productStatusId));
+    public Page<SalesOrderDto> findByProduct(Long productStatusId) {
+        //return converterDomainToDto.convertToDto(salesOrderReposirory.findByProduct(productStatusId));
+        return null;
     }
 
     @Override
-    public List<SalesOrderDto> findByProductCategory(Long productCategoryId) {
-        return converterDomainToDto.convertToDto(salesOrderReposirory.findByProductCategory(productCategoryId));
+    public Page<SalesOrderDto> findByProductCategory(Long productCategoryId) {
+        //return converterDomainToDto.convertToDto(salesOrderReposirory.findByProductCategory(productCategoryId));
+        return null;
     }
 
     @Override
-    public List<SalesOrderDto> findByDate(LocalDate date) {
-        return converterDomainToDto.convertToDto(salesOrderReposirory.findByDate(date));
+    public Page<SalesOrderDto> findByDate(Pageable pageable, LocalDateTime date) {
+        return (Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByDate(pageable, date).getContent());
     }
 
     @Override
@@ -117,5 +121,6 @@ public class SalesOrderServiceImpl implements SalesOrderService {
       //  else salesOrderDto.getSalesBucket().remove(productId);
         return salesOrderDto;
     }
+
 
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.store.store1130.service.impl.SalesOrderServiceImpl;
 
 @RestController
-@RequestMapping("salesorder")
+@RequestMapping("order")
 public class SalesOrderController {
     @Autowired
     SalesOrderServiceImpl salesOrderService;

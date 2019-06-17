@@ -1,22 +1,24 @@
 package ru.store.store1130.db.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
-
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
 import java.util.List;
+
 @Accessors(chain = true)
 @Entity
 @Table(name = "sales_order")
 @Data
-
+@JsonIdentityInfo(
+        property = "id",
+        generator = ObjectIdGenerators.PropertyGenerator.class
+)
 public class SalesOrder {
 
     @Id
@@ -35,9 +37,13 @@ public class SalesOrder {
     @JoinColumn(name = "user_id", referencedColumnName = "id" )
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_in_order_id", referencedColumnName = "id")
-    private List<ProductInOrder> productInOrders;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "product_in_order",
+            joinColumns = { @JoinColumn(name = "sales_order_id")},
+            inverseJoinColumns = { @JoinColumn(name = "product_id")}
+    )
+    private List<Product> products;
 
     @Column(name = "order_status")
     @Enumerated(EnumType.STRING)

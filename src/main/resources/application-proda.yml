@@ -1,0 +1,17 @@
+server:
+  error:
+    include-stacktrace: ALWAYS
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Shop
+    username: postgres
+    password: 1z5x9c
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+liquibase:
+  change-log: classpath:/db/changelog/changelog-dev.xml
+
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults: false
