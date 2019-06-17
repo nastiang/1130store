@@ -2,6 +2,7 @@ package ru.store.store1130.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.store.store1130.Converters.ConverterDomainToDto;
@@ -15,6 +16,10 @@ import ru.store.store1130.service.SalesOrderService;
 import ru.store.store1130.service.dto.SalesOrderDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import static ru.store.store1130.db.model.SalesOrderStatus.INPROGRESS;
+import static ru.store.store1130.db.model.SalesOrderStatus.SUBMITED;
 
 @Service
 public class SalesOrderServiceImpl implements SalesOrderService {
@@ -49,10 +54,15 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     }
 
     @Override
-    public SalesOrderDto update(SalesOrderDto salesOrderDto, SalesOrderStatus salesOrderStatus) {
-        SalesOrder salesOrder = converterDomainToDto.convertToDomain(salesOrderDto);
-      return converterDomainToDto.convertToDto(salesOrderReposirory.save(salesOrder));
+    public SalesOrderDto update(SalesOrderDto salesOrderDto) {
+        if (salesOrderDto.getStatus().getText().equals(INPROGRESS.getText()) || salesOrderDto.getStatus().getText().equals(SUBMITED.getText())) {
+            SalesOrder salesOrder = converterDomainToDto.convertToDomain(salesOrderDto);
+            return converterDomainToDto.convertToDto(salesOrderReposirory.save(salesOrder));
+        }
+        else return null; //тут что-то надо вернуть, свое исключение?
     }
+
+
 
     @Override
     public void delete(Long id) {
@@ -66,31 +76,30 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     @Override
     public Page<SalesOrderDto> findByOrderCategory(Pageable pageable, OrderCategory orderCategory) {
-        return
-                (Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByOrderCategory(pageable, orderCategory).getContent());
-
-    }
+            List<SalesOrder> salesOrderList = salesOrderReposirory.findByOrderCategory(pageable, orderCategory).getContent();
+            List<SalesOrderDto> salesOrderDtos = converterDomainToDto.convertToDto(salesOrderList);
+            return new PageImpl<>(salesOrderDtos);
+        }
 
     @Override
     public Page<SalesOrderDto> findByStatus(Pageable pageable, SalesOrderStatus salesOrderStatus) {
-        return (Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByStatus(pageable, salesOrderStatus).getContent());
+        List<SalesOrder> salesOrderList = salesOrderReposirory.findByStatus(pageable, salesOrderStatus).getContent();
+        List<SalesOrderDto> salesOrderDtos = converterDomainToDto.convertToDto(salesOrderList);
+        return new PageImpl<>(salesOrderDtos);
     }
 
-    @Override
-    public Page<SalesOrderDto> findByProduct(Long productStatusId) {
-        //return converterDomainToDto.convertToDto(salesOrderReposirory.findByProduct(productStatusId));
-        return null;
-    }
-
-    @Override
-    public Page<SalesOrderDto> findByProductCategory(Long productCategoryId) {
-        //return converterDomainToDto.convertToDto(salesOrderReposirory.findByProductCategory(productCategoryId));
-        return null;
-    }
+ //   @Override
+ //   public Page<SalesOrderDto> findByProductId(Pageable pageable, Long productId) {
+ //       List<SalesOrder> salesOrderList = salesOrderReposirory.findByProductId(pageable, productId).getContent();
+ //       List<SalesOrderDto> salesOrderDtos = converterDomainToDto.convertToDto(salesOrderList);
+ //       return new PageImpl<>(salesOrderDtos);
+ //   }
 
     @Override
     public Page<SalesOrderDto> findByDate(Pageable pageable, LocalDateTime date) {
-        return (Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByDate(pageable, date).getContent());
+        List<SalesOrder> salesOrderList = salesOrderReposirory.findByDate(pageable, date).getContent();
+        List<SalesOrderDto> salesOrderDtos = converterDomainToDto.convertToDto(salesOrderList);
+        return new PageImpl<>(salesOrderDtos);
     }
 
     @Override

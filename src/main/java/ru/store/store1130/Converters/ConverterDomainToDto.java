@@ -1,5 +1,6 @@
 package ru.store.store1130.Converters;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import ru.store.store1130.db.model.*;
 import ru.store.store1130.service.dto.*;
@@ -55,8 +56,8 @@ public class ConverterDomainToDto {
     }
 
     public List<SalesOrderDto> convertToDto(List<SalesOrder> orders){
-        List<SalesOrderDto> orderDtoList = new ArrayList<>();
-        ConverterDomainToDto converterDomainToDto = new ConverterDomainToDto();
+       List<SalesOrderDto> orderDtoList = new ArrayList<>();
+       ConverterDomainToDto converterDomainToDto = new ConverterDomainToDto();
         for (SalesOrder order1 : orders){
             orderDtoList.add(converterDomainToDto.convertToDto(order1));
         }
