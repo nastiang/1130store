@@ -18,6 +18,6 @@ public interface SalesOrderReposirory extends JpaRepository<SalesOrder, Long> {
     Page<SalesOrder> findByDate(Pageable pageable, LocalDateTime date);
     Page<SalesOrder> findByOrderCategory(Pageable pageable, OrderCategory orderCategory);
     Page<SalesOrder> findByStatus(Pageable pageable, SalesOrderStatus salesOrderStatus);
-    //List<SalesOrder> findByProduct(Long id);
+    Page<SalesOrder> findByProduct(Long id);
     //List<SalesOrder> findByProductCategory(Long id);
 }

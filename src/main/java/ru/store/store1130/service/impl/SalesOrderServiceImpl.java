@@ -16,6 +16,9 @@ import ru.store.store1130.service.dto.SalesOrderDto;
 
 import java.time.LocalDateTime;
 
+import static ru.store.store1130.db.model.SalesOrderStatus.INPROGRESS;
+import static ru.store.store1130.db.model.SalesOrderStatus.SUBMITED;
+
 @Service
 public class SalesOrderServiceImpl implements SalesOrderService {
 
@@ -49,10 +52,15 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     }
 
     @Override
-    public SalesOrderDto update(SalesOrderDto salesOrderDto, SalesOrderStatus salesOrderStatus) {
-        SalesOrder salesOrder = converterDomainToDto.convertToDomain(salesOrderDto);
-      return converterDomainToDto.convertToDto(salesOrderReposirory.save(salesOrder));
+    public SalesOrderDto update(SalesOrderDto salesOrderDto) {
+        if (salesOrderDto.getStatus().getText().equals(INPROGRESS.getText()) || salesOrderDto.getStatus().getText().equals(SUBMITED.getText())) {
+            SalesOrder salesOrder = converterDomainToDto.convertToDomain(salesOrderDto);
+            return converterDomainToDto.convertToDto(salesOrderReposirory.save(salesOrder));
+        }
+        else return null; //тут что-то надо вернуть, свое исключение?
     }
+
+
 
     @Override
     public void delete(Long id) {
@@ -66,19 +74,20 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     @Override
     public Page<SalesOrderDto> findByOrderCategory(Pageable pageable, OrderCategory orderCategory) {
-        return
-                (Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByOrderCategory(pageable, orderCategory).getContent());
+        return null;
+         //       (Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByOrderCategory(pageable, orderCategory).getContent());
 
     }
 
     @Override
     public Page<SalesOrderDto> findByStatus(Pageable pageable, SalesOrderStatus salesOrderStatus) {
-        return (Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByStatus(pageable, salesOrderStatus).getContent());
+        return null;
+                //(Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByStatus(pageable, salesOrderStatus).getContent());
     }
 
     @Override
-    public Page<SalesOrderDto> findByProduct(Long productStatusId) {
-        //return converterDomainToDto.convertToDto(salesOrderReposirory.findByProduct(productStatusId));
+    public Page<SalesOrderDto> findByProduct(Long productId) {
+        //return converterDomainToDto.convertToDto(salesOrderReposirory.findByProduct(productId));
         return null;
     }
 
@@ -90,7 +99,8 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     @Override
     public Page<SalesOrderDto> findByDate(Pageable pageable, LocalDateTime date) {
-        return (Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByDate(pageable, date).getContent());
+        return null;
+        //(Page<SalesOrderDto>) converterDomainToDto.convertToDto(salesOrderReposirory.findByDate(pageable, date).getContent());
     }
 
     @Override

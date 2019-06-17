@@ -14,11 +14,11 @@ public interface SalesOrderService {
     Page<SalesOrderDto> getAllOrder(Pageable pageable, String sortBy, String filter, String filterParam);
     SalesOrderDto getOne(Long id);
     void create(SalesOrderDto salesOrderDto);
-    SalesOrderDto update(SalesOrderDto salesOrderDto, SalesOrderStatus salesOrderStatus);
+    SalesOrderDto update(SalesOrderDto salesOrderDto);
     void delete(Long id);
     Page<SalesOrderDto> findByOrderCategory(Pageable pageable, OrderCategory OrderCategory);
     Page<SalesOrderDto> findByStatus(Pageable pageable, SalesOrderStatus salesOrderStatus);
-    Page<SalesOrderDto> findByProduct(Long productStatusId);
+    Page<SalesOrderDto> findByProduct(Long productId);
     Page<SalesOrderDto> findByProductCategory(Long productCategoryId);
     Page<SalesOrderDto> findByDate(Pageable pageable, LocalDateTime date);
     SalesOrderDto addToBucket(SalesOrderDto salesOrderDto, Long productId, int value);

@@ -1,5 +1,6 @@
 package ru.store.store1130.Converters;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import ru.store.store1130.db.model.*;
 import ru.store.store1130.service.dto.*;
@@ -54,14 +55,15 @@ public class ConverterDomainToDto {
         return orderList;
     }
 
-    public List<SalesOrderDto> convertToDto(List<SalesOrder> orders){
-        List<SalesOrderDto> orderDtoList = new ArrayList<>();
-        ConverterDomainToDto converterDomainToDto = new ConverterDomainToDto();
-        for (SalesOrder order1 : orders){
-            orderDtoList.add(converterDomainToDto.convertToDto(order1));
-        }
-        return orderDtoList;
-    }
+   // public Page<SalesOrderDto> convertToDto(Page<SalesOrder> orders){
+     //   Page<SalesOrderDto> orderDtoList = new Page<SalesOrderDto>() {
+      //  };
+     //   ConverterDomainToDto converterDomainToDto = new ConverterDomainToDto();
+     //   for (SalesOrder order1 : orders){
+     //       orderDtoList.add(converterDomainToDto.convertToDto(order1));
+    //    }
+      //  return orderDtoList;
+   // }
 
     public LinkedHashMap<Long,Integer> convertToDomain(LinkedHashMap<Long,Integer> salesOrderDtoLinkedHashMap) {
         LinkedHashMap<Long, Integer> domainLinkedHashMap = (LinkedHashMap)salesOrderDtoLinkedHashMap.clone();
