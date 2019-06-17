@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SalesOrderReposirory extends JpaRepository<SalesOrder, Long> {
-    List<SalesOrder> findAll();
+    Page<SalesOrder> findAll(Pageable pageable);
     Optional<SalesOrder> findById(Long id);
     Page<SalesOrder> findByDate(Pageable pageable, LocalDateTime date);
     Page<SalesOrder> findByOrderCategory(Pageable pageable, OrderCategory orderCategory);

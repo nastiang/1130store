@@ -10,6 +10,16 @@ import java.util.List;
 
 @Component
 public class ConverterDomainToDto {
+    public ProductReportDto convertToDomain(SalesOrder salesOrder) {
+        ProductReportDto dto = new ProductReportDto();
+        dto.setDate(salesOrder.getDate());
+        dto.setUser(salesOrder.getUser());
+        dto.setProducts(salesOrder.getProducts());
+        dto.setSum(salesOrder.getSum());
+
+        return dto;
+    }
+
     public SalesOrder convertToDomain(SalesOrderDto orderDto){
         SalesOrder order = new SalesOrder();
         order.setId(orderDto.getId());

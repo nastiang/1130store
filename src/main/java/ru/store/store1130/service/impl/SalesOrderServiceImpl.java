@@ -15,7 +15,6 @@ import ru.store.store1130.service.SalesOrderService;
 import ru.store.store1130.service.dto.SalesOrderDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class SalesOrderServiceImpl implements SalesOrderService {
@@ -30,8 +29,8 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     ProductInOrderRepository productInOrderRepository;
 
     @Override
-    public List<SalesOrder> findAll() {
-        return salesOrderReposirory.findAll();
+    public Page<SalesOrder> findAll(Pageable pageable) {
+        return salesOrderReposirory.findAll(pageable);
     }
 
     @Override

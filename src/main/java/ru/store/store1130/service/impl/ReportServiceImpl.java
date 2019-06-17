@@ -1,16 +1,17 @@
 package ru.store.store1130.service.impl;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.querydsl.binding.QuerydslPredicateBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.store.store1130.Converters.ConverterDomainToDto;
+import ru.store.store1130.db.model.Product;
 import ru.store.store1130.db.model.SalesOrder;
-import ru.store.store1130.db.model.Views;
 import ru.store.store1130.service.ReportService;
 import ru.store.store1130.service.SalesOrderService;
 import ru.store.store1130.service.dto.ProductReportDto;
 
-import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,24 +22,32 @@ public class ReportServiceImpl implements ReportService {
     private SalesOrderService salesOrderService;
 
     @Autowired
-    private EntityManager entityManager;
+    private ConverterDomainToDto converter;
 
     @Override
-    public List<ProductReportDto> getAllProductReport() {
-        List<SalesOrder> allOrders = salesOrderService.findAll();
+    public Page<ProductReportDto> getAllProductReport(Pageable pageable) {
+        Page<SalesOrder> allOrders = salesOrderService.findAll(pageable);
         List<ProductReportDto> allProductReports = new ArrayList<>();
 
-        for (SalesOrder order : allOrders) {
-            ProductReportDto dto = new ProductReportDto();
-            dto.setData(order.getDate());
-            dto.setUser(order.getUser());
-            dto.setProducts(order.getProducts());
-            dto.setSum(order.getSum());
-            dto.setProfit(new BigDecimal(123));
+        for (SalesOrder order : allOrders.getContent()) {
+            ProductReportDto dto = converter.convertToDomain(order);
+
+            dto.setProfit(getProfit(dto.getSum(), dto.getProducts()));
 
             allProductReports.add(dto);
         }
 
-        return allProductReports;
+        return new PageImpl<>(allProductReports);
+    }
+
+    private BigDecimal getProfit(BigDecimal sum, List<Product> products) {
+        BigDecimal profit = BigDecimal.ZERO;
+        for (Product product : products) {
+            profit = profit.add(product.getCost());
+        }
+
+        profit = sum.subtract(profit);
+
+        return profit;
     }
 }

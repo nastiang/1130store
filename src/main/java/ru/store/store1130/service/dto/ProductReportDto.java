@@ -15,19 +15,20 @@ import java.util.List;
 @JsonView(Views.NoOrders.class)
 public class ProductReportDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime data;
+    private LocalDateTime date;
     private User user;
     private List<Product> products;
     private BigDecimal sum;
     private BigDecimal profit;
+
     private static BigDecimal totalSum;
     private static BigDecimal totalProfit;
 
-    public void addTotalSum(BigDecimal sum) {
-        totalSum.add(sum);
+    public static void addTotalSum(BigDecimal sum) {
+        totalSum = totalSum.add(sum);
     }
 
-    public void addTotalProfit(BigDecimal profit) {
-        totalProfit.add(profit);
+    public static void addTotalProfit(BigDecimal profit) {
+        totalProfit = totalProfit.add(profit);
     }
 }

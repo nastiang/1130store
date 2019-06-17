@@ -24,6 +24,6 @@ public interface SalesOrderService {
     SalesOrderDto addToBucket(SalesOrderDto salesOrderDto, Long productId, int value);
     SalesOrderDto deleteFromBucket(SalesOrderDto salesOrderDto, Long productId);
 
-    List<SalesOrder> findAll();
+    Page<SalesOrder> findAll(Pageable pageable);
 
 }
