@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class ReportServiceImpl implements ReportService {
     @Autowired
-    private SalesOrderService salesOrderService;
+    private SalesOrderServiceImpl salesOrderService;
 
     @Autowired
     private ConverterDomainToDto converter;

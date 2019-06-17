@@ -18,8 +18,7 @@ public interface SalesOrderService {
     void delete(Long id);
     Page<SalesOrderDto> findByOrderCategory(Pageable pageable, OrderCategory OrderCategory);
     Page<SalesOrderDto> findByStatus(Pageable pageable, SalesOrderStatus salesOrderStatus);
-    Page<SalesOrderDto> findByProduct(Long productId);
-    Page<SalesOrderDto> findByProductCategory(Long productCategoryId);
+   // Page<SalesOrderDto> findByProductId(Pageable pageable, Long productId);
     Page<SalesOrderDto> findByDate(Pageable pageable, LocalDateTime date);
     SalesOrderDto addToBucket(SalesOrderDto salesOrderDto, Long productId, int value);
     SalesOrderDto deleteFromBucket(SalesOrderDto salesOrderDto, Long productId);

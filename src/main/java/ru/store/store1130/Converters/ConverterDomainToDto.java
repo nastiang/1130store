@@ -55,15 +55,14 @@ public class ConverterDomainToDto {
         return orderList;
     }
 
-   // public Page<SalesOrderDto> convertToDto(Page<SalesOrder> orders){
-     //   Page<SalesOrderDto> orderDtoList = new Page<SalesOrderDto>() {
-      //  };
-     //   ConverterDomainToDto converterDomainToDto = new ConverterDomainToDto();
-     //   for (SalesOrder order1 : orders){
-     //       orderDtoList.add(converterDomainToDto.convertToDto(order1));
-    //    }
-      //  return orderDtoList;
-   // }
+    public List<SalesOrderDto> convertToDto(List<SalesOrder> orders){
+       List<SalesOrderDto> orderDtoList = new ArrayList<>();
+       ConverterDomainToDto converterDomainToDto = new ConverterDomainToDto();
+        for (SalesOrder order1 : orders){
+            orderDtoList.add(converterDomainToDto.convertToDto(order1));
+        }
+        return orderDtoList;
+    }
 
     public LinkedHashMap<Long,Integer> convertToDomain(LinkedHashMap<Long,Integer> salesOrderDtoLinkedHashMap) {
         LinkedHashMap<Long, Integer> domainLinkedHashMap = (LinkedHashMap)salesOrderDtoLinkedHashMap.clone();

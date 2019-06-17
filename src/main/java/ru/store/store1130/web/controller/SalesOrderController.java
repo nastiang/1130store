@@ -19,8 +19,18 @@ public class SalesOrderController {
     }
 
     @PutMapping("{id}")
-    public SalesOrderDto updateSalesOrder(@PathVariable("id") @RequestBody SalesOrderDto salesOrderDto, SalesOrderStatus status){
-        return salesOrderService.update(salesOrderDto, status);
+    public SalesOrderDto updateSalesOrder(@PathVariable("id") @RequestBody SalesOrderDto salesOrderDto){
+        return salesOrderService.update(salesOrderDto);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteSalesOrder(@PathVariable("id") SalesOrderDto salesOrderDto){
+        salesOrderService.delete(salesOrderDto.getId());
+    }
+
+    @PostMapping("create")
+    public void createSalesOrder(@RequestBody SalesOrderDto salesOrderDto) {
+        salesOrderService.create(salesOrderDto);
     }
 
 
