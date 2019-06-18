@@ -204,4 +204,15 @@
         </insert>
     </changeSet>
 
+    <changeSet id="24" author="Artem">
+        <update tableName="sales_order">
+            <column name="order_type" type="VARCHAR(20)" value="PAYED" />
+            <where>id = 1</where>
+        </update>
+        <update tableName="sales_order">
+            <column name="order_type" type="VARCHAR(20)" value="RETURNED" />
+            <where>id != 1</where>
+        </update>
+    </changeSet>
+
 </databaseChangeLog>
