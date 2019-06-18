@@ -1,18 +1,25 @@
 package ru.store.store1130.db.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Accessors(chain = true)
 @Entity
 @Table(name = "sales_order")
 @Data
-@Accessors(chain = true)
-public class Order {
+@JsonIdentityInfo(
+        property = "id",
+        generator = ObjectIdGenerators.PropertyGenerator.class
+)
+public class SalesOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,17 +37,20 @@ public class Order {
     @JoinColumn(name = "user_id", referencedColumnName = "id" )
     private User user;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "product_in_order",
+            joinColumns = { @JoinColumn(name = "sales_order_id")},
+            inverseJoinColumns = { @JoinColumn(name = "product_id")}
+    )
+    private List<Product> products;
 
-    @ManyToOne
-    @JoinColumn(name = "order_status_id", referencedColumnName = "id")
-    private OrderStatus status;
+    @Column(name = "order_status")
+    @Enumerated(EnumType.STRING)
+    private SalesOrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "order_category_id", referencedColumnName = "id")
     private OrderCategory orderCategory;
-
 
 }

@@ -1,4 +1,4 @@
-/*package ru.store.store1130.web.controller;
+package ru.store.store1130.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +27,3 @@ public class ReportController {
         return reportService.getAllProductReport(p);
     }
 }
-*/

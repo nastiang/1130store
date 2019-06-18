@@ -1,4 +1,4 @@
-/*package ru.store.store1130.db.repository;
+package ru.store.store1130.db.repository;
 
 import com.querydsl.core.types.dsl.EntityPathBase;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +18,3 @@ public interface ExCustomRepository<T extends SalesOrder, P extends EntityPathBa
     default void customize(QuerydslBindings bindings, P root) {
     }
 }
-*/

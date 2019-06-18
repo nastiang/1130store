@@ -1,4 +1,4 @@
-/*package ru.store.store1130.service.impl;
+package ru.store.store1130.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,4 +51,3 @@ public class ReportServiceImpl implements ReportService {
         return profit;
     }
 }
-*/

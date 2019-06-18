@@ -1,35 +1,51 @@
 package ru.store.store1130.service.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.store.store1130.db.model.User;
+import ru.store.store1130.db.repository.UserRepository;
+import ru.store.store1130.mapper.UserMapper;
 import ru.store.store1130.service.UserService;
 import ru.store.store1130.service.dto.UserDto;
-import ru.store.store1130.web.ConverterDomainToDto;
+
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    ConverterDomainToDto converter;
+    private UserRepository userRepository;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
-    public UserDto getOneUser(Long id) {
-        return null;
+    public UserDto getOneUser(String email, String password) {
+            return userMapper.userToDto(userRepository.findByEmailAndPassword(email, password).get());
     }
 
     @Override
     public UserDto addUser(UserDto userDto) {
-        return null;
+
+        User user = userMapper.userDtoToEntity(userDto);
+        User save = userRepository.save(user);
+
+        return userMapper.userToDto(save);
     }
 
     @Override
     public UserDto updateUser(User userFromDB, UserDto userDto) {
-        return null;
+        Long id = userFromDB.getId();
+        BeanUtils.copyProperties(userDto, userFromDB);
+        userFromDB.setId(id);
+
+        User save = userRepository.save(userFromDB);
+
+        return userMapper.userToDto(save);
     }
 
     @Override
     public void deleteUser(User user) {
+        userRepository.delete(user);
 
     }
 }
