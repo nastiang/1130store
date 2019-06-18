@@ -20,6 +20,6 @@ public class ProductCategory {
     private Long id;
 
     @Column(name = "name_of_product_category")
-    //@JsonView(Views.NoOrders.class)
+    @JsonView(Views.ShortReport.class)
     private String nameOfProductCategory;
 }

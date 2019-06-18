@@ -22,7 +22,7 @@ public class UserRole implements GrantedAuthority{
     private Long id;
 
     @Column(name = "name_of_role")
-    //@JsonView(Views.NoOrders.class)
+    @JsonView(Views.ShortReport.class)
     private String nameOfRole;
 
 

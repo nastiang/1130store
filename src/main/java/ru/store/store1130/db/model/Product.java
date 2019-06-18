@@ -27,24 +27,24 @@ public class Product {
     private Long id;
 
     @Column(name = "name")
-    //@JsonView(Views.NoOrders.class)
+    @JsonView(Views.ShortReport.class)
     private String nameOfProduct;
 
     @Column(name = "price")
-    //@JsonView(Views.NoOrders.class)
+    @JsonView(Views.ShortReport.class)
     private BigDecimal price;
 
     @Column(name = "cost")
-    //@JsonView(Views.NoOrders.class)
+    @JsonView(Views.ShortReport.class)
     private BigDecimal cost;
 
     @Column(name = "count")
-    //@JsonView(Views.NoOrders.class)
+    @JsonView(Views.ShortReport.class)
     private int count;
 
     @ManyToOne
     @JoinColumn(name = "product_category_id", referencedColumnName = "id")
-    //@JsonView(Views.NoOrders.class)
+    @JsonView(Views.ShortReport.class)
     private ProductCategory productCategory;
 
     /*@ManyToMany(mappedBy = "products")

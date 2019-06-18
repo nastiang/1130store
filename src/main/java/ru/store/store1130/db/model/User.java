@@ -26,11 +26,11 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "email")
-    //@JsonView(Views.NoOrders.class)
+    @JsonView(Views.ShortReport.class)
     private String email;
 
     @Column(name = "enabled", nullable = false)
-    //@JsonView(Views.NoOrders.class)
+    @JsonView(Views.ShortReport.class)
     private boolean enabled;
 
     @Column(name = "password")
@@ -38,7 +38,7 @@ public class User implements UserDetails {
 
     @OneToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
-    //@JsonView(Views.NoOrders.class)
+    @JsonView(Views.ShortReport.class)
     private UserRole role;
 
 

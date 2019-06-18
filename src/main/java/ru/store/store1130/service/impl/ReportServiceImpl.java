@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.store.store1130.service.dto.ProductReportPagesDto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -25,26 +26,59 @@ public class ReportServiceImpl implements ReportService {
     private ConverterDomainToDto converter;
 
     @Override
-    public Page<ProductReportDto> getAllProductReport(Pageable pageable) {
+    public ProductReportPagesDto getAllProductReport(Pageable pageable) {
         Page<SalesOrder> allOrders = salesOrderService.findAll(pageable);
         List<ProductReportDto> allProductReports = new ArrayList<>();
 
         for (SalesOrder order : allOrders) {
             ProductReportDto dto = converter.convertToDomain(order);
 
+            dto.setSum(getSum(order.getProducts()));
             dto.setProfit(getProfit(dto.getSum(), dto.getProducts()));
 
             allProductReports.add(dto);
         }
 
+
         Page<ProductReportDto> pages = new PageImpl<>(allProductReports);
 
-        /*return new ProductReportPagesDto(
+        return new ProductReportPagesDto(
                 pages.getContent(),
                 pageable.getPageNumber(),
-                pages.getTotalPages()
-        );*/
-        return pages;
+                pages.getTotalPages(),
+                fillTotalSum(allProductReports),
+                fillTotalProfit(allProductReports)
+        );
+    }
+
+    private BigDecimal fillTotalProfit(List<ProductReportDto> allProductReports) {
+        BigDecimal totalProfit = BigDecimal.ZERO;
+
+        for (ProductReportDto productReport : allProductReports) {
+            totalProfit = totalProfit.add(productReport.getProfit());
+        }
+
+        return totalProfit;
+    }
+
+    private BigDecimal fillTotalSum(List<ProductReportDto> allProductReports) {
+        BigDecimal totalSum = BigDecimal.ZERO;
+
+        for (ProductReportDto productReport : allProductReports) {
+            totalSum = totalSum.add(productReport.getSum());
+        }
+
+        return totalSum;
+    }
+
+    private BigDecimal getSum(List<Product> products) {
+        BigDecimal sum = BigDecimal.ZERO;
+
+        for (Product product : products) {
+            sum = sum.add(product.getPrice());
+        }
+
+        return sum;
     }
 
     private BigDecimal getProfit(BigDecimal sum, List<Product> products) {
