@@ -54,5 +54,6 @@ public class SalesOrder {
     private OrderCategory orderCategory;
 
     @Column(name = "order_type")
+    @Enumerated(EnumType.STRING)
     private OrderType orderType;
 }
