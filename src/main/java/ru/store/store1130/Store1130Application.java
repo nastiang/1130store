@@ -10,24 +10,10 @@ import ru.store.store1130.db.repository.UserRepository;
 import static java.util.Arrays.asList;
 
 @SpringBootApplication
-public class Store1130Application implements CommandLineRunner {
+public class Store1130Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Store1130Application.class, args);
-
-    }
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Override
-    public void run(String... args) {
-        userRepository.saveAll(
-                asList(
-                        new User().setEmail("admindmitrich@mail.ru").setPassword("pochta1212"),
-                        new User().setEmail("samplemail@mail.ru").setPassword("samplepassword")
-                )
-        );
-
+        
     }
 }
