@@ -2,17 +2,13 @@ package ru.store.store1130.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ru.store.store1130.db.model.Product;
-import ru.store.store1130.db.model.ProductCategory;
-import ru.store.store1130.service.impl.ProductServiceImpl;
 import ru.store.store1130.service.dto.ProductDto;
-
-import java.util.List;
+import ru.store.store1130.service.impl.ProductServiceImpl;
 
 
 @RestController

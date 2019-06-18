@@ -2,10 +2,7 @@ package ru.store.store1130.service.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import ru.store.store1130.db.model.OrderCategory;
-import ru.store.store1130.db.model.Product;
-import ru.store.store1130.db.model.SalesOrderStatus;
-import ru.store.store1130.db.model.User;
+import ru.store.store1130.db.model.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,5 +18,6 @@ public class SalesOrderDto {
     private List<Product> productList;
     private SalesOrderStatus status;
     private OrderCategory orderCategory;
+    private OrderType orderType;
 
 }
