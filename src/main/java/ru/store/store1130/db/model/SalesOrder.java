@@ -53,4 +53,7 @@ public class SalesOrder {
     @JoinColumn(name = "order_category_id", referencedColumnName = "id")
     private OrderCategory orderCategory;
 
+    @Column(name = "order_type")
+    @Enumerated(EnumType.STRING)
+    private OrderType orderType;
 }

@@ -30,6 +30,7 @@ public class ConverterDomainToDto {
         order.setStatus(orderDto.getStatus());
         order.setSum(orderDto.getSum());
         order.setUser(orderDto.getUser());
+        order.setOrderType(orderDto.getOrderType());
         return order;
     }
 
@@ -42,7 +43,7 @@ public class ConverterDomainToDto {
         orderDto.setStatus(order.getStatus());
         orderDto.setSum(order.getSum());
         orderDto.setUser(order.getUser());
-
+        orderDto.setOrderType(order.getOrderType());
         return  orderDto;
     }
 
