@@ -18,6 +18,7 @@ public class ProductReportDto {
     private LocalDateTime date;
     private User user;
     private List<Product> products;
+    private String orderType;
     private BigDecimal sum;
     private BigDecimal profit;
 }
