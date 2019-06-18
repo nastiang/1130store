@@ -21,7 +21,7 @@ public class ReportController {
     @GetMapping
     @JsonView(Views.ShortReport.class)
     public ProductReportPagesDto getAllProductReports(
-            @PageableDefault(size = 2, sort = { "date" }, direction = Sort.Direction.ASC) Pageable p
+            @PageableDefault(size = 20, sort = { "date" }, direction = Sort.Direction.ASC) Pageable p
     ) {
         return reportService.getAllProductReport(p);
     }

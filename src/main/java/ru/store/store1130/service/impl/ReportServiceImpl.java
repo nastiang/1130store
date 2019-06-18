@@ -33,8 +33,9 @@ public class ReportServiceImpl implements ReportService {
         for (SalesOrder order : allOrders) {
             ProductReportDto dto = converter.convertToDomain(order);
 
-            dto.setSum(getSum(order.getProducts()));
-            dto.setProfit(getProfit(dto.getSum(), dto.getProducts()));
+            dto.setOrderType(order.getOrderType().getText());
+            dto.setSum(getSum(dto.getOrderType(), order.getProducts()));
+            dto.setProfit(getProfit(dto.getOrderType(), dto.getSum(), dto.getProducts()));
 
             allProductReports.add(dto);
         }
@@ -71,20 +72,26 @@ public class ReportServiceImpl implements ReportService {
         return totalSum;
     }
 
-    private BigDecimal getSum(List<Product> products) {
+    private BigDecimal getSum(String orderType, List<Product> products) {
         BigDecimal sum = BigDecimal.ZERO;
 
         for (Product product : products) {
-            sum = sum.add(product.getPrice());
+            if (orderType.equals("покупка"))
+                sum = sum.add(product.getPrice());
+            else
+                sum = sum.subtract(product.getPrice());
         }
 
         return sum;
     }
 
-    private BigDecimal getProfit(BigDecimal sum, List<Product> products) {
+    private BigDecimal getProfit(String orderType, BigDecimal sum, List<Product> products) {
         BigDecimal profit = BigDecimal.ZERO;
         for (Product product : products) {
-            profit = profit.add(product.getCost());
+            if (orderType.equals("покупка"))
+                profit = profit.add(product.getCost());
+            else
+                profit = profit.subtract(product.getCost());
         }
 
         profit = sum.subtract(profit);
