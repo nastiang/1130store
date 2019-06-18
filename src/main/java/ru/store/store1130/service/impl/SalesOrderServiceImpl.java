@@ -7,12 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.store.store1130.Converters.ConverterDomainToDto;
 import ru.store.store1130.db.model.OrderCategory;
+import ru.store.store1130.db.model.Product;
 import ru.store.store1130.db.model.SalesOrder;
 import ru.store.store1130.db.model.SalesOrderStatus;
 import ru.store.store1130.db.repository.ProductInOrderRepository;
 import ru.store.store1130.db.repository.ProductRepository;
 import ru.store.store1130.db.repository.SalesOrderReposirory;
 import ru.store.store1130.service.SalesOrderService;
+import ru.store.store1130.service.dto.ProductInOrderDto;
 import ru.store.store1130.service.dto.SalesOrderDto;
 
 import java.time.LocalDateTime;
@@ -31,7 +33,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Autowired
     ProductRepository productRepository;
     @Autowired
-    ProductInOrderRepository productInOrderRepository;
+    ProductInOrderServiceImpl productInOrderService;
 
     @Override
     public Page<SalesOrder> findAll(Pageable pageable) {
@@ -104,10 +106,10 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     @Override
     public SalesOrderDto addToBucket(SalesOrderDto salesOrderDto, Long productId, int value) {
-      //  BucketDto bucketDto = new BucketDto();
-        //bucketDto.setProduct(productRepository.findById(productId).orElse(new Product())).setValue(value);
-        //bucketRepository.save(converterDomainToDto.convertToDomain(bucketDto));
-        //return salesOrderDto.setBucket(converterDomainToDto.convertToDomain(bucketDto));
+        ProductInOrderDto productInOrderDto = new ProductInOrderDto();
+        productInOrderDto.setSalesOrder(converterDomainToDto.convertToDomain(salesOrderDto)).
+                setProduct(productRepository.findById(productId).orElse(new Product()));
+        productInOrderService.saveOrUpdate(productInOrderDto);
         return null;
     }
 
