@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.security.core.GrantedAuthority;
 
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "user_role")
 @Data
 
-public class UserRole {
+public class UserRole implements GrantedAuthority{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +22,12 @@ public class UserRole {
     private Long id;
 
     @Column(name = "name_of_role")
-    @JsonView(Views.NoOrders.class)
+    //@JsonView(Views.NoOrders.class)
     private String nameOfRole;
 
 
+    @Override
+    public String getAuthority() {
+        return getNameOfRole();
+    }
 }

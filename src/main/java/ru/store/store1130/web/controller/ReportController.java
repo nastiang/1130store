@@ -1,6 +1,7 @@
 package ru.store.store1130.web.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
+import ru.store.store1130.service.ReportService;
+import ru.store.store1130.service.dto.ProductReportDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,9 +10,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.store.store1130.db.model.Views;
-import ru.store.store1130.service.ReportService;
-import ru.store.store1130.service.dto.ProductReportDto;
 
 @RestController
 @RequestMapping("reports")
@@ -20,7 +18,7 @@ public class ReportController {
     private ReportService reportService;
 
     @GetMapping
-    @JsonView(Views.NoOrders.class)
+    //@JsonView(Views.NoOrders.class)
     public Page<ProductReportDto> getAllProductReports(
             @PageableDefault(size = 20, sort = { "date" }, direction = Sort.Direction.ASC) Pageable p
     ) {

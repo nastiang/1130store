@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@JsonView(Views.NoOrders.class)
+//@JsonView(Views.NoOrders.class)
 public class ProductReportDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime date;
