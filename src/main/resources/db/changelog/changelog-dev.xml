@@ -1,19 +1,142 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <include file="db/changelog/schema/schema.xml"/>
 
-    <changeSet id="6" author="Artem">
-        <insert tableName="sales_order">
+    <changeSet id="1" author="Artem">
+        <insert tableName="user_role">
             <column name="id" valueNumeric="1"/>
-            <column name="date" valueDate="'12.06.2019'"/>
-            <column name="sum" valueNumeric="4386"/>
-            <column name="user_id" valueNumeric="1"/>
-            <column name="bucket_id" valueNumeric="1"/>
-            <column name="order_category_id" valueNumeric="2"/>
+            <column name="name_of_role" value="MODER"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2" author="Artem">
+        <insert tableName="user_role">
+            <column name="id" valueNumeric="2"/>
+            <column name="name_of_role" value="USER"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="3" author="Artem">
+        <insert tableName="usr">
+            <column name="id" valueNumeric="1"/>
+            <column name="email" value="artem@storchak.ru"/>
+            <column name="password" valueNumeric="123456"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="4" author="Artem">
+        <insert tableName="usr">
+            <column name="id" valueNumeric="2"/>
+            <column name="email" value="anastasia@shapovalova.ru"/>
+            <column name="password" valueNumeric="123456"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role_id" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="5" author="Artem">
+        <insert tableName="usr">
+            <column name="id" valueNumeric="3"/>
+            <column name="email" value="maksim@popov.ru"/>
+            <column name="password" valueNumeric="123456"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="6" author="Artem">
+        <insert tableName="product_category">
+            <column name="id" valueNumeric="1"/>
+            <column name="name_of_product_category" value="Шляпы"/>
         </insert>
     </changeSet>
 
     <changeSet id="7" author="Artem">
+        <insert tableName="product_category">
+            <column name="id" valueNumeric="2"/>
+            <column name="name_of_product_category" value="Платья"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="8" author="Artem">
+        <insert tableName="product_category">
+            <column name="id" valueNumeric="3"/>
+            <column name="name_of_product_category" value="Аксессуары"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="9" author="Artem">
+        <insert tableName="order_category">
+            <column name="id" valueNumeric="1"/>
+            <column name="name_of_category" value="Instagram"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="10" author="Artem">
+        <insert tableName="order_category">
+            <column name="id" valueNumeric="2"/>
+            <column name="name_of_category" value="VK"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="11" author="Artem">
+        <insert tableName="order_category">
+            <column name="id" valueNumeric="3"/>
+            <column name="name_of_category" value="Telegram"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="12" author="Artem">
+        <insert tableName="product">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="Панамка"/>
+            <column name="price" valueNumeric="1053"/>
+            <column name="cost" valueNumeric="982"/>
+            <column name="product_category_id" valueNumeric="1"/>
+            <column name="count" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="13" author="Artem">
+        <insert tableName="product">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="Серьги"/>
+            <column name="price" valueNumeric="3333"/>
+            <column name="cost" valueNumeric="2222"/>
+            <column name="product_category_id" valueNumeric="3"/>
+            <column name="count" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="14" author="Artem">
+        <insert tableName="product">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="Сарафан"/>
+            <column name="price" valueNumeric="1600"/>
+            <column name="cost" valueNumeric="1200"/>
+            <column name="product_category_id" valueNumeric="2"/>
+            <column name="count" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="15" author="Artem">
+        <insert tableName="sales_order">
+            <column name="id" valueNumeric="1"/>
+            <column name="date" valueDate="2019-06-12"/>
+            <column name="sum" valueNumeric="4386"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="order_category_id" valueNumeric="2"/>
+            <column name="order_status" value="оплачен"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="16" author="Artem">
         <insert tableName="product_in_order">
             <column name="id" valueNumeric="1"/>
             <column name="product_id" valueNumeric="1"/>
@@ -21,7 +144,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="8" author="Artem">
+    <changeSet id="17" author="Artem">
         <insert tableName="product_in_order">
             <column name="id" valueNumeric="2"/>
             <column name="product_id" valueNumeric="2"/>
@@ -29,18 +152,18 @@
         </insert>
     </changeSet>
 
-    <changeSet id="9" author="Artem">
+    <changeSet id="18" author="Artem">
         <insert tableName="sales_order">
             <column name="id" valueNumeric="2"/>
-            <column name="date" valueDate="'14.06.2019'"/>
+            <column name="date" valueDate="2019-06-14"/>
             <column name="sum" valueNumeric="160"/>
             <column name="user_id" valueNumeric="1"/>
-            <column name="bucket_id" valueNumeric="3"/>
             <column name="order_category_id" valueNumeric="2"/>
+            <column name="order_status" value="оплачен"/>
         </insert>
     </changeSet>
 
-    <changeSet id="10" author="Artem">
+    <changeSet id="19" author="Artem">
         <insert tableName="product_in_order">
             <column name="id" valueNumeric="3"/>
             <column name="product_id" valueNumeric="3"/>
@@ -48,5 +171,219 @@
         </insert>
     </changeSet>
 
+    <changeSet id="20" author="Artem">
+        <insert tableName="sales_order">
+            <column name="id" valueNumeric="3"/>
+            <column name="date" valueDate="2019-06-17"/>
+            <column name="sum" valueNumeric="160"/>
+            <column name="user_id" valueNumeric="1"/>
+            <column name="order_category_id" valueNumeric="2"/>
+            <column name="order_status" value="оплачен"/>
+        </insert>
+    </changeSet>
 
+    <changeSet id="21" author="Artem">
+        <insert tableName="product_in_order">
+            <column name="id" valueNumeric="5"/>
+            <column name="product_id" valueNumeric="3"/>
+            <column name="sales_order_id" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="22" author="Artem">
+        <update tableName="sales_order">
+            <column name="order_status" type="VARCHAR(255)" value="PAYED" />
+        </update>
+    </changeSet>
+
+    <changeSet id="23" author="Artem">
+        <insert tableName="product_in_order">
+            <column name="id" valueNumeric="4"/>
+            <column name="product_id" valueNumeric="1"/>
+            <column name="sales_order_id" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="24" author="Artem">
+        <update tableName="sales_order">
+            <column name="order_type" type="VARCHAR(20)" value="PAYED" />
+            <where>id = 1</where>
+        </update>
+        <update tableName="sales_order">
+            <column name="order_type" type="VARCHAR(20)" value="RETURNED" />
+            <where>id != 1</where>
+        </update>
+    </changeSet>
+
+    <changeSet id="25" author="Maksim">
+        <update tableName="sales_order">
+            <column name="order_type" type="VARCHAR(20)" value="PURCHASED" />
+            <where>id = 1</where>
+        </update>
+    </changeSet>
+
+    <changeSet id="26" author="Maksim">
+        <insert tableName="usr">
+            <column name="id" valueNumeric="4"/>
+            <column name="email" value="kantemir@blagov.ru"/>
+            <column name="password" valueNumeric="135642"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="27" author="Maksim">
+        <insert tableName="usr">
+            <column name="id" valueNumeric="5"/>
+            <column name="email" value="duhast@vyacheslavich.ru"/>
+            <column name="password" valueNumeric="975468"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="28" author="Maksim">
+        <insert tableName="usr">
+            <column name="id" valueNumeric="6"/>
+            <column name="email" value="uriy@dud.ru"/>
+            <column name="password" valueNumeric="579864"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="role_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="29" author="Maksim">
+        <insert tableName="product_category">
+            <column name="id" valueNumeric="4"/>
+            <column name="name_of_product_category" value="Underwear"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="30" author="Maksim">
+        <insert tableName="product_category">
+            <column name="id" valueNumeric="5"/>
+            <column name="name_of_product_category" value="Blouses"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="31" author="Maksim">
+        <insert tableName="product_category">
+            <column name="id" valueNumeric="6"/>
+            <column name="name_of_product_category" value="Skirts"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="32" author="Maksim">
+        <insert tableName="order_category">
+            <column name="id" valueNumeric="4"/>
+            <column name="name_of_category" value="From a friend"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="33" author="Maksim">
+        <insert tableName="order_category">
+            <column name="id" valueNumeric="5"/>
+            <column name="name_of_category" value="From the magazine"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="34" author="Maksim">
+        <insert tableName="order_category">
+            <column name="id" valueNumeric="6"/>
+            <column name="name_of_category" value="From the magazine"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="35" author="Maksim">
+        <insert tableName="product">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="Bra D"/>
+            <column name="price" valueNumeric="5500"/>
+            <column name="cost" valueNumeric="3000"/>
+            <column name="product_category_id" valueNumeric="4"/>
+            <column name="count" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="36" author="Maksim">
+        <insert tableName="product">
+            <column name="id" valueNumeric="5"/>
+            <column name="name" value="Blouse with kimono sleeve in beige"/>
+            <column name="price" valueNumeric="3000"/>
+            <column name="cost" valueNumeric="2100"/>
+            <column name="product_category_id" valueNumeric="5"/>
+            <column name="count" valueNumeric="4"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="37" author="Maksim">
+        <insert tableName="product">
+            <column name="id" valueNumeric="6"/>
+            <column name="name" value="Midi skirt"/>
+            <column name="price" valueNumeric="3400"/>
+            <column name="cost" valueNumeric="2600"/>
+            <column name="product_category_id" valueNumeric="6"/>
+            <column name="count" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="38" author="Maksim">
+        <insert tableName="sales_order">
+            <column name="id" valueNumeric="4"/>
+            <column name="date" valueDate="2019-06-19"/>
+            <column name="sum" valueNumeric="3400"/>
+            <column name="user_id" valueNumeric="4"/>
+            <column name="order_category_id" valueNumeric="4"/>
+            <column name="order_status" value="PAYED"/>
+            <column name="order_type" value="PURCHASED"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="39" author="Maksim">
+        <insert tableName="product_in_order">
+            <column name="id" valueNumeric="6"/>
+            <column name="product_id" valueNumeric="6"/>
+            <column name="sales_order_id" valueNumeric="4"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="40" author="Maksim">
+        <insert tableName="sales_order">
+            <column name="id" valueNumeric="5"/>
+            <column name="date" valueDate="2019-06-19"/>
+            <column name="sum" valueNumeric="5500"/>
+            <column name="user_id" valueNumeric="5"/>
+            <column name="order_category_id" valueNumeric="4"/>
+            <column name="order_status" value="PAYED"/>
+            <column name="order_type" value="PURCHASED"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="41" author="Maksim">
+        <insert tableName="product_in_order">
+            <column name="id" valueNumeric="7"/>
+            <column name="product_id" valueNumeric="4"/>
+            <column name="sales_order_id" valueNumeric="5"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="42" author="Maksim">
+        <insert tableName="sales_order">
+            <column name="id" valueNumeric="6"/>
+            <column name="date" valueDate="2019-06-19"/>
+            <column name="sum" valueNumeric="3000"/>
+            <column name="user_id" valueNumeric="6"/>
+            <column name="order_category_id" valueNumeric="5"/>
+            <column name="order_status" value="PAYED"/>
+            <column name="order_type" value="PURCHASED"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="43" author="Maksim">
+        <insert tableName="product_in_order">
+            <column name="id" valueNumeric="8"/>
+            <column name="product_id" valueNumeric="5"/>
+            <column name="sales_order_id" valueNumeric="6"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
