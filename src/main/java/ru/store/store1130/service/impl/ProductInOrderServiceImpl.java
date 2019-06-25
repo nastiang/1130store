@@ -11,6 +11,7 @@ import ru.store.store1130.db.repository.SalesOrderReposirory;
 import ru.store.store1130.service.ProductInOrderService;
 import ru.store.store1130.service.dto.ProductInOrderDto;
 import ru.store.store1130.Converters.ConverterDomainToDto;
+import ru.store.store1130.service.dto.SalesOrderDto;
 
 @Service
 public class ProductInOrderServiceImpl implements ProductInOrderService {
@@ -25,7 +26,19 @@ public class ProductInOrderServiceImpl implements ProductInOrderService {
     }
 
     @Override
-    public void delete(ProductInOrderDto productInOrderDto) {
+    public void delete(ProductInOrderDto productInOrderDto, int value) {
+        int resultValue = productInOrderDto.getQuantity() - value;
+        if (resultValue > 0){
+            productInOrderDto.setQuantity(resultValue);
+            saveOrUpdate(productInOrderDto);
+        }
+        else productInOrderRepository.delete(converterDomainToDto.convertToDomain(productInOrderDto));
+    }
 
+    @Override
+    public ProductInOrderDto findOne(SalesOrderDto salesOrderDto) {
+        ProductInOrderDto productInOrderDto = converterDomainToDto.convertToDto
+                (productInOrderRepository.findBySalesOrder(converterDomainToDto.convertToDomain(salesOrderDto)));
+        return productInOrderDto;
     }
 }

@@ -9,7 +9,8 @@ import ru.store.store1130.db.model.Product;
 import ru.store.store1130.db.model.SalesOrder;
 @Accessors(chain = true)
 @Data
-
+@Getter
+@Setter
 public class ProductInOrderDto {
     private Long id;
     private Product product;

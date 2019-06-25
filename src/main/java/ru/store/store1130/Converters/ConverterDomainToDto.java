@@ -1,6 +1,7 @@
 package ru.store.store1130.Converters;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 import ru.store.store1130.db.model.*;
 import ru.store.store1130.service.dto.*;
@@ -125,6 +126,15 @@ public class ConverterDomainToDto {
         productDto.setProductCategory(product.getProductCategory());
 
         return productDto;
+    }
+
+    public Page<ProductDto> convertToDto(Page<Product> products){
+        List<ProductDto> productDtoList = new ArrayList<>();
+        ConverterDomainToDto converterDomainToDto = new ConverterDomainToDto();
+        for (Product product1 : products){
+            productDtoList.add(converterDomainToDto.convertToDto(product1));
+        }
+        return new PageImpl<>(productDtoList);
     }
 
     public ProductCategory convertToDomain(ProductCategoryDto productCategoryDto){
