@@ -15,6 +15,7 @@ import ru.store.store1130.db.model.SalesOrderStatus;
 import ru.store.store1130.db.repository.ProductInOrderRepository;
 import ru.store.store1130.db.repository.ProductRepository;
 import ru.store.store1130.db.repository.SalesOrderReposirory;
+import ru.store.store1130.service.CommonException;
 import ru.store.store1130.service.SalesOrderService;
 import ru.store.store1130.service.dto.ProductDto;
 import ru.store.store1130.service.dto.ProductInOrderDto;
@@ -106,7 +107,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Transactional(propagation = Propagation.REQUIRED,
             rollbackFor = Exception.class)
     @Override
-    public void addToBucket(SalesOrderDto salesOrderDto, ProductDto productDto, int value) {
+    public void addToBucket(SalesOrderDto salesOrderDto, ProductDto productDto, int value) throws CommonException{
         ProductInOrderDto productInOrderDto = productInOrderService.findOne(salesOrderDto);
 
         if (productInOrderDto.getSalesOrder() == null) {
@@ -115,10 +116,16 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         productInOrderDto.setProduct(converterDomainToDto.convertToDomain(productDto)).setQuantity(value);
         productInOrderService.saveOrUpdate(productInOrderDto);
 
-        if (productDto.getCount() >= value) {
-            productRepository.save(converterDomainToDto.convertToDomain(
-                    productDto.setCount(productDto.getCount() - value)));
+        try {
+            for (productDto.getCount() >= value) {
+                productRepository.save(converterDomainToDto.convertToDomain(
+                        productDto.setCount(productDto.getCount() - value)));
 
+            }
+        }
+
+        catch(CommonException ex){
+            ex.getMessage();
         }
 
         // иначе исключение, дописать (невозможно добавить в ордер товаров больше чем есть на складе...
@@ -128,7 +135,7 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Transactional(propagation = Propagation.REQUIRED,
             rollbackFor = Exception.class)
     @Override
-    public void deleteFromBucket(SalesOrderDto salesOrderDto, ProductDto productDto, int value) {
+    public void deleteFromBucket(SalesOrderDto salesOrderDto, ProductDto productDto, int value) throws Exception{
         ProductInOrderDto productInOrderDto = productInOrderService.findOne(salesOrderDto);
         productInOrderService.delete(productInOrderDto, value);
 

@@ -20,8 +20,8 @@ public interface SalesOrderService {
     Page<SalesOrderDto> findByStatus(Pageable pageable, SalesOrderStatus salesOrderStatus);
    // Page<SalesOrderDto> findByProductId(Pageable pageable, Long productId);
     Page<SalesOrderDto> findByDate(Pageable pageable, LocalDateTime date);
-    void addToBucket(SalesOrderDto salesOrderDto, ProductDto productDto, int value);
-    void deleteFromBucket(SalesOrderDto salesOrderDto, ProductDto productDto, int value);
+    void addToBucket(SalesOrderDto salesOrderDto, ProductDto productDto, int value) throws CommonException;
+    void deleteFromBucket(SalesOrderDto salesOrderDto, ProductDto productDto, int value) throws Exception;
 
     Page<SalesOrder> findAll(Pageable pageable);
 
