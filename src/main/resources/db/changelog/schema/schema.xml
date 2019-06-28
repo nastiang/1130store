@@ -255,9 +255,5 @@
                                   constraintName="sales_order_bucket_id_fk"/>
     </changeSet>
 
-    <changeSet id="34" author="Artem">
-        <dropColumn tableName="sales_order" columnName="bucket_id" />
-        <dropColumn tableName="product_in_order" columnName="quantity" />
-    </changeSet>
 
 </databaseChangeLog>

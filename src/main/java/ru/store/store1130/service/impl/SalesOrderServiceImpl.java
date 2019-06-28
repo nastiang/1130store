@@ -5,14 +5,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.store.store1130.Converters.ConverterDomainToDto;
 import ru.store.store1130.db.model.OrderCategory;
+import ru.store.store1130.db.model.Product;
 import ru.store.store1130.db.model.SalesOrder;
 import ru.store.store1130.db.model.SalesOrderStatus;
 import ru.store.store1130.db.repository.ProductInOrderRepository;
 import ru.store.store1130.db.repository.ProductRepository;
 import ru.store.store1130.db.repository.SalesOrderReposirory;
 import ru.store.store1130.service.SalesOrderService;
+import ru.store.store1130.service.dto.ProductDto;
+import ru.store.store1130.service.dto.ProductInOrderDto;
 import ru.store.store1130.service.dto.SalesOrderDto;
 
 import java.time.LocalDateTime;
@@ -31,16 +36,13 @@ public class SalesOrderServiceImpl implements SalesOrderService {
     @Autowired
     ProductRepository productRepository;
     @Autowired
+    ProductInOrderServiceImpl productInOrderService;
+    @Autowired
     ProductInOrderRepository productInOrderRepository;
 
     @Override
     public Page<SalesOrder> findAll(Pageable pageable) {
         return salesOrderReposirory.findAll(pageable);
-    }
-
-    @Override
-    public Page<SalesOrderDto> getAllOrder(Pageable pageable, String sortBy, String filter, String filterParam) {
-        return null;
     }
 
     @Override
@@ -58,16 +60,14 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         if (salesOrderDto.getStatus().getText().equals(INPROGRESS.getText()) || salesOrderDto.getStatus().getText().equals(SUBMITED.getText())) {
             SalesOrder salesOrder = converterDomainToDto.convertToDomain(salesOrderDto);
             return converterDomainToDto.convertToDto(salesOrderReposirory.save(salesOrder));
-        }
-        else return null; //тут что-то надо вернуть, свое исключение?
+        } else return null; //тут что-то надо вернуть, свое исключение?
     }
-
 
 
     @Override
     public void delete(Long id) {
         SalesOrder salesOrder = salesOrderReposirory.findById(id).get();
-        if (salesOrder == null){
+        if (salesOrder == null) {
             return;
         }
         salesOrderReposirory.delete(salesOrder);
@@ -76,10 +76,10 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     @Override
     public Page<SalesOrderDto> findByOrderCategory(Pageable pageable, OrderCategory orderCategory) {
-            List<SalesOrder> salesOrderList = salesOrderReposirory.findByOrderCategory(pageable, orderCategory).getContent();
-            List<SalesOrderDto> salesOrderDtos = converterDomainToDto.convertToDto(salesOrderList);
-            return new PageImpl<>(salesOrderDtos);
-        }
+        List<SalesOrder> salesOrderList = salesOrderReposirory.findByOrderCategory(pageable, orderCategory).getContent();
+        List<SalesOrderDto> salesOrderDtos = converterDomainToDto.convertToDto(salesOrderList);
+        return new PageImpl<>(salesOrderDtos);
+    }
 
     @Override
     public Page<SalesOrderDto> findByStatus(Pageable pageable, SalesOrderStatus salesOrderStatus) {
@@ -88,12 +88,13 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         return new PageImpl<>(salesOrderDtos);
     }
 
- //   @Override
- //   public Page<SalesOrderDto> findByProductId(Pageable pageable, Long productId) {
- //       List<SalesOrder> salesOrderList = salesOrderReposirory.findByProductId(pageable, productId).getContent();
- //       List<SalesOrderDto> salesOrderDtos = converterDomainToDto.convertToDto(salesOrderList);
- //       return new PageImpl<>(salesOrderDtos);
- //   }
+    //   @Override
+    //   public Page<SalesOrderDto> findByProductId(Pageable pageable, Long productId) {
+    //       List<SalesOrder> salesOrderList = salesOrderReposirory.findByProductId(pageable, productId).getContent();
+    //       List<SalesOrderDto> salesOrderDtos = converterDomainToDto.convertToDto(salesOrderList);
+    //       return new PageImpl<>(salesOrderDtos);
+    //   }
+
 
     @Override
     public Page<SalesOrderDto> findByDate(Pageable pageable, LocalDateTime date) {
@@ -102,34 +103,44 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         return new PageImpl<>(salesOrderDtos);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED,
+            rollbackFor = Exception.class)
     @Override
-    public SalesOrderDto addToBucket(SalesOrderDto salesOrderDto, Long productId, int value) {
-      //  BucketDto bucketDto = new BucketDto();
-        //bucketDto.setProduct(productRepository.findById(productId).orElse(new Product())).setValue(value);
-        //bucketRepository.save(converterDomainToDto.convertToDomain(bucketDto));
-        //return salesOrderDto.setBucket(converterDomainToDto.convertToDomain(bucketDto));
-        return null;
+    public void addToBucket(SalesOrderDto salesOrderDto, ProductDto productDto, int value) {
+        ProductInOrderDto productInOrderDto = productInOrderService.findOne(salesOrderDto);
+
+        if (productInOrderDto.getSalesOrder() == null) {
+            productInOrderDto.setSalesOrder(converterDomainToDto.convertToDomain(salesOrderDto));
+        }
+        productInOrderDto.setProduct(converterDomainToDto.convertToDomain(productDto)).setQuantity(value);
+        productInOrderService.saveOrUpdate(productInOrderDto);
+
+        if (productDto.getCount() >= value) {
+            productRepository.save(converterDomainToDto.convertToDomain(
+                    productDto.setCount(productDto.getCount() - value)));
+
+        }
+
+        // иначе исключение, дописать (невозможно добавить в ордер товаров больше чем есть на складе...
+
     }
 
+    @Transactional(propagation = Propagation.REQUIRED,
+            rollbackFor = Exception.class)
     @Override
-    public SalesOrderDto deleteFromBucket(SalesOrderDto salesOrderDto, Long productId) {
-  //      ProductDto productDto = converterDomainToDto.convertToDto(productRepository.findById(productId).orElse(new Product()));
-    //    int count = 1;
-       // int changedValue =
-      //          Bucket bucket = bucketRepository.getOne(salesOrderDto.getBucket().getId());
+    public void deleteFromBucket(SalesOrderDto salesOrderDto, ProductDto productDto, int value) {
+        ProductInOrderDto productInOrderDto = productInOrderService.findOne(salesOrderDto);
+        productInOrderService.delete(productInOrderDto, value);
 
-      //         if (bucket.getValue() > 0) {
-      //             bucketRepository.save(bucket);
-      //         }
-      //         else
+        if (productInOrderDto.getQuantity() >= value) {
+            productInOrderRepository.save(converterDomainToDto.convertToDomain(
+                    productInOrderDto.setQuantity(productInOrderDto.getQuantity() - value)));
+        }
 
-      //  salesOrderDto.getSalesBucket().get(productDto.getId()) - count;
-      //  if (changedValue > 0) {
-      //      salesOrderDto.getSalesBucket().put(productId, changedValue);
-     //   }
-      //  else salesOrderDto.getSalesBucket().remove(productId);
-        return salesOrderDto;
+        // иначе исключение, нельзя удалить из корзины больше чем в ней есть...
+
+        productRepository.save(converterDomainToDto.convertToDomain(
+                productDto.setCount(productDto.getCount() + value)));
+
     }
-
-
 }
