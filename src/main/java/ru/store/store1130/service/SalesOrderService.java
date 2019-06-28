@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SalesOrderService {
+
     Page<SalesOrderDto> getAllOrder(Pageable pageable, String sortBy, String filter, String filterParam);
     SalesOrderDto getOne(Long id);
     void create(SalesOrderDto salesOrderDto);

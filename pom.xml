@@ -144,7 +144,7 @@
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/Shop</url>
                     <username>postgres</username>
-                    <password>1z5x9c</password>
+                    <password>andrew</password>
                 </configuration>
                 <executions>
                     <execution>

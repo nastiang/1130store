@@ -1,22 +1,24 @@
 1.Product добавить поле count (Артем) +
 2.Order переименовать в SalesOrder (Артем) +
 3.Поменять ManyToOne на ManyToMany в SalesOrder (Настя) +
-4.CRUD+list по User (Алексей/Андрей?)
+4.CRUD+list по User (Алексей/Андрей?)+
 
 6.Добавить order_type (возврат/продажа) (Максим) +
 7.SalesOrderService параметризировать update(status) +CRUD+list+addProduct+deleteProduct (Настя)
-(осталось дописать deleteProduct из корзины и контроллер) +-
+(осталось дописать deleteProduct из корзины и контроллер) - нужно решить вопрос с quantity
 
-8.Пагинация в сервисах List (limit 20) {Настя-SalesOrder + , Артем-Category + ,Максим-Product - , Алексей-User -}
+8.Пагинация в сервисах List (limit 20) {Настя-SalesOrder + , Артем-Category + ,Максим-Product  , Алексей-User -} +
 
 9.Сортировка в list {Настя-SalesOrder, Артем-Category,Максим-Product,Алексей-User}
 
 10.Фильтрация list {Настя-SalesOrder, Артем-Category,Максим-Product,Алексей-User}
 
-11.Spring Security логин/пароль + токен, каждый сервис вызывать с токеном (Настя) -
-12.Spring Session (хранить в таблице UserSession) (Артем) -
+11.Spring Security логин/пароль + токен, каждый сервис вызывать с токеном (Артем) -
+12.Spring Session (хранить в таблице UserSession) (Настя) -
 13.Забить базу тестовыми данными (Артем+Максим) -
 14.Отчеты (reportingService+controller+query dsl) (Артем по продажам, Максим по позициям, Андрей/Алексей? отчет по продажам по товарам) -
-15.Рефакторинг switch (Всем подумать и предложить реализицию) -
+15.Рефакторинг switch (Всем подумать и предложить реализицию) - (я возьму,Настя)
 16. Добавление таблицы "корзина",+repository+service+db+dto+converter (Настя) +
 17. Изменение таблицы статуса заказа на Enum +удаление таблицы+изменения в сущности и связанных таблицах (Настя/Артем) +
+18. Написать общее исключение.
+19. Отчет в pdf.

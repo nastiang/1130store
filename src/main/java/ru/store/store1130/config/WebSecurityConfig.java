@@ -1,6 +1,5 @@
 package ru.store.store1130.config;
 
-import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 import ru.store.store1130.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
