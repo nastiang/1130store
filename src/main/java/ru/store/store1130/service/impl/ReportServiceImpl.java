@@ -76,7 +76,7 @@ public class ReportServiceImpl implements ReportService {
         BigDecimal sum = BigDecimal.ZERO;
 
         for (Product product : products) {
-            if (orderType.equals("покупка"))
+            if (orderType.equalsIgnoreCase("покупка"))
                 sum = sum.add(product.getPrice());
             else
                 sum = sum.subtract(product.getPrice());
@@ -88,7 +88,7 @@ public class ReportServiceImpl implements ReportService {
     private BigDecimal getProfit(String orderType, BigDecimal sum, List<Product> products) {
         BigDecimal profit = BigDecimal.ZERO;
         for (Product product : products) {
-            if (orderType.equals("покупка"))
+            if (orderType.equalsIgnoreCase("покупка"))
                 profit = profit.add(product.getCost());
             else
                 profit = profit.subtract(product.getCost());
