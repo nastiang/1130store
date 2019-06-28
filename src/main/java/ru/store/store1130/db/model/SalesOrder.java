@@ -37,7 +37,7 @@ public class SalesOrder {
     @JoinColumn(name = "user_id", referencedColumnName = "id" )
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "product_in_order",
             joinColumns = { @JoinColumn(name = "sales_order_id")},

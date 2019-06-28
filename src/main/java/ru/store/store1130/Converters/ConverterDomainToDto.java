@@ -17,6 +17,7 @@ public class ConverterDomainToDto {
         dto.setDate(salesOrder.getDate());
         dto.setUser(salesOrder.getUser());
         dto.setProducts(salesOrder.getProducts());
+        dto.setOrderType(salesOrder.getOrderType().getText());
 
         return dto;
     }

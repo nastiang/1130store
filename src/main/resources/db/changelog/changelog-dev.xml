@@ -204,7 +204,7 @@
 
     <changeSet id="24" author="Artem">
         <update tableName="sales_order">
-            <column name="order_type" type="VARCHAR(20)" value="PAYED" />
+            <column name="order_type" type="VARCHAR(20)" value="PURCHASED" />
             <where>id = 1</where>
         </update>
         <update tableName="sales_order">

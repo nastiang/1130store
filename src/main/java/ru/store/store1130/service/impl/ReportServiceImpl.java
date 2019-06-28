@@ -1,8 +1,10 @@
 package ru.store.store1130.service.impl;
 
+import com.itextpdf.text.DocumentException;
 import ru.store.store1130.Converters.ConverterDomainToDto;
 import ru.store.store1130.db.model.Product;
 import ru.store.store1130.db.model.SalesOrder;
+import ru.store.store1130.db.model.User;
 import ru.store.store1130.service.ReportService;
 import ru.store.store1130.service.SalesOrderService;
 import ru.store.store1130.service.dto.ProductReportDto;
@@ -12,8 +14,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.store.store1130.service.dto.ProductReportPagesDto;
+import ru.store.store1130.utils.CreatePDF;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,15 +30,16 @@ public class ReportServiceImpl implements ReportService {
     @Autowired
     private ConverterDomainToDto converter;
 
+    private ProductReportPagesDto productReportPagesDto;
+
     @Override
-    public ProductReportPagesDto getAllProductReport(Pageable pageable) {
+    public ProductReportPagesDto getAllProductReport(Pageable pageable, User user) {
         Page<SalesOrder> allOrders = salesOrderService.findAll(pageable);
         List<ProductReportDto> allProductReports = new ArrayList<>();
 
         for (SalesOrder order : allOrders) {
             ProductReportDto dto = converter.convertToDomain(order);
 
-            dto.setOrderType(order.getOrderType().getText());
             dto.setSum(getSum(dto.getOrderType(), order.getProducts()));
             dto.setProfit(getProfit(dto.getOrderType(), dto.getSum(), dto.getProducts()));
 
@@ -43,13 +49,20 @@ public class ReportServiceImpl implements ReportService {
 
         Page<ProductReportDto> pages = new PageImpl<>(allProductReports);
 
-        return new ProductReportPagesDto(
+        productReportPagesDto = new ProductReportPagesDto(
                 pages.getContent(),
                 pageable.getPageNumber(),
                 pages.getTotalPages(),
                 fillTotalSum(allProductReports),
                 fillTotalProfit(allProductReports)
         );
+
+        return productReportPagesDto;
+    }
+
+    @Override
+    public void downloadPDF() throws DocumentException, IOException, URISyntaxException {
+        CreatePDF.getPDF(productReportPagesDto);
     }
 
     private BigDecimal fillTotalProfit(List<ProductReportDto> allProductReports) {

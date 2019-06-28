@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import ru.store.store1130.db.model.Product;
+import ru.store.store1130.db.model.ProductCategory;
 import ru.store.store1130.service.dto.ProductDto;
 
 import java.util.Optional;
@@ -15,8 +16,6 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findAll(Pageable p);
     Optional<Product> findById(Long id);
-    Page<Product> findByProductCategory(Long id);
-
-    Product save(Product product);
+    Page<Product> findByProductCategory(ProductCategory productCategory, Pageable pageable);
 
 }

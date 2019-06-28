@@ -6,6 +6,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import ru.store.store1130.Converters.ConverterDomainToDto;
 import ru.store.store1130.db.model.Product;
+import ru.store.store1130.db.model.ProductCategory;
 import ru.store.store1130.db.repository.ProductRepository;
 import ru.store.store1130.mapper.ProductMapper;
 import ru.store.store1130.service.ProductService;
@@ -18,13 +19,24 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    @Autowired ProductRepository productRepository;
-    @Autowired ProductMapper productMapper;
     @Autowired
-    ConverterDomainToDto converterDomainToDto;
+    private ProductRepository productRepository;
+
+    @Autowired
+    private ProductMapper productMapper;
+
+    @Autowired
+    private ConverterDomainToDto converterDomainToDto;
 
     public Page<ProductDto> getAllProduct(Pageable p, String sortBy, String filter, String filterParam) {
-        return null;  // по ходу и тут все эти поля на вход лишние
+        Page<Product> allProduct = productRepository.findAll(p);
+        List<ProductDto> allProductDto = new ArrayList<>();
+
+        for (Product product : allProduct) {
+            allProductDto.add(productMapper.productCategoryToDto(product));
+        }
+
+        return new PageImpl<>(allProductDto);
     }
 
     public ProductDto getOneProduct(Long id) {
@@ -53,8 +65,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public Page<ProductDto> getProductDtoByCategory(Long categoryId){
-        Page<Product> productList = productRepository.findByProductCategory(categoryId);
+    public Page<ProductDto> getProductDtoByCategory(ProductCategory productCategory, Pageable pageable){
+        Page<Product> productList = productRepository.findByProductCategory(productCategory, pageable);
         return converterDomainToDto.convertToDto(productList);
     }
 }
