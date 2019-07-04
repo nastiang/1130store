@@ -82,6 +82,18 @@
             <version>4.2.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.56</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -136,9 +148,9 @@
                 <configuration>
                     <changeLogFile>src/main/resources/db/changelog/changelog-dev.xml</changeLogFile>
                     <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:5432/Shop</url>
+                    <url>jdbc:postgresql://postgres:5432/postgres</url>
                     <username>postgres</username>
-                    <password>1z5x9c</password>
+                    <password>123456</password>
                 </configuration>
                 <executions>
                     <execution>
