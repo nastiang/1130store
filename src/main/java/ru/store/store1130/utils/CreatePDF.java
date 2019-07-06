@@ -12,41 +12,52 @@ import ru.store.store1130.service.dto.ProductReportPagesDto;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class CreatePDF {
     public static void getPDF(ProductReportPagesDto productReportPagesDto) throws IOException, DocumentException, URISyntaxException {
-        Document document = new Document();
+        Document document = new Document(PageSize.A4.rotate(), 50, 50, 50 ,50);
+
         PdfWriter.getInstance(document, new FileOutputStream("E:\\iText.pdf"));
 
         document.open();
 
-        Font font = FontFactory.getFont("resources/font/calibri.ttf", "cp1251", BaseFont.EMBEDDED, 12);
+        BaseFont bf = BaseFont.createFont("/font/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        Font font = new Font(bf, 12);
 
         PdfPTable table = new PdfPTable(5);
-        addTableHeader(table);
+
+        table.setTotalWidth(PageSize.A4.rotate().getWidth()-10);
+        table.setLockedWidth(true);
+
+        addTableHeader(table, font);
         addRows(table, productReportPagesDto.getAllProductReports(), font);
 
         document.add(table);
+
         document.close();
     }
 
-    private static void addTableHeader(PdfPTable table) {
-        Stream.of("Date", "User", "Product", "Sum", "Cost")
+    private static void addTableHeader(PdfPTable table, Font font) {
+        Stream.of("Дата", "Пользователь", "Продукт", "Сумма", "Себестоимость")
                 .forEach(columnTitle -> {
                     PdfPCell header = new PdfPCell();
                     header.setBackgroundColor(BaseColor.LIGHT_GRAY);
                     header.setBorderWidth(2);
-                    header.setPhrase(new Phrase(columnTitle));
+                    header.setPhrase(new Phrase(columnTitle, font));
                     table.addCell(header);
                 });
     }
 
-    private static void addRows(PdfPTable table, List<ProductReportDto> allProductReports, Font font) {
+    private static void addRows(PdfPTable table, List<ProductReportDto> allProductReports, Font font)  {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
         for (ProductReportDto productReport : allProductReports) {
-            table.addCell(productReport.getDate().toString());
+            table.addCell(productReport.getDate().format(formatter));
             table.addCell(productReport.getUser().getEmail());
 
             StringBuilder sb = new StringBuilder();
@@ -57,7 +68,7 @@ public class CreatePDF {
                 else
                     sb.append(", ").append(product.getNameOfProduct());
             }
-            table.addCell(new Paragraph(sb.toString(), font));
+            table.addCell(new Phrase(sb.toString(), font));
 
             table.addCell(productReport.getSum().toString());
             table.addCell(productReport.getProfit().toString());

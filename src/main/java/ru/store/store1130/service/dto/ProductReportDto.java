@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @JsonView(Views.ShortReport.class)
 public class ProductReportDto {
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDateTime date;
     private User user;
     private List<Product> products;
