@@ -158,7 +158,7 @@ public class ConverterDomainToDto {
         user.setId(userDto.getId());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
-        user.setRole(userDto.getRole());
+        user.setRoles(userDto.getRoles());
 
         return user;
     }
@@ -168,7 +168,7 @@ public class ConverterDomainToDto {
         userDto.setId(user.getId());
         userDto.setEmail(user.getEmail());
         userDto.setPassword(user.getPassword());
-        userDto.setRole(user.getRole());
+        userDto.setRoles(user.getRoles());
 
         return userDto;
     }

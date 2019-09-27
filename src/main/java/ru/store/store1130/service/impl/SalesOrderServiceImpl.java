@@ -116,17 +116,14 @@ public class SalesOrderServiceImpl implements SalesOrderService {
         productInOrderDto.setProduct(converterDomainToDto.convertToDomain(productDto)).setQuantity(value);
         productInOrderService.saveOrUpdate(productInOrderDto);
 
-        try {
-            for (productDto.getCount() >= value) {
+
+            if (productDto.getCount() >= value) {
                 productRepository.save(converterDomainToDto.convertToDomain(
                         productDto.setCount(productDto.getCount() - value)));
 
             }
-        }
-
-        catch(CommonException ex){
-            ex.getMessage();
-        }
+        else
+            new CommonException("Недостаточно товара на складе").getMessage();
 
         // иначе исключение, дописать (невозможно добавить в ордер товаров больше чем есть на складе...
 

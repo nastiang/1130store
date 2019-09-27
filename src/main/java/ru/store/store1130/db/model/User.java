@@ -8,6 +8,8 @@ import lombok.experimental.Accessors;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
+import java.util.List;
 import java.util.Set;
 @Accessors(chain = true)
 @Entity
@@ -32,10 +34,11 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    @JsonView(Views.NoOrders.class)
-    private UserRole role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "roles",
+    joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_role_id", referencedColumnName = "id")})
+    private List<UserRole> roles;
 
 
 }

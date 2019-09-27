@@ -8,6 +8,8 @@ import lombok.experimental.Accessors;
 
 
 import javax.persistence.*;
+import java.util.List;
+
 @Accessors(chain = true)
 @Entity
 @Table(name = "user_role")
@@ -21,8 +23,10 @@ public class UserRole {
     private Long id;
 
     @Column(name = "name_of_role")
-    @JsonView(Views.NoOrders.class)
     private String nameOfRole;
+
+    @ManyToMany (mappedBy = "roles", fetch = FetchType.LAZY)
+    private List<User> users;
 
 
 }

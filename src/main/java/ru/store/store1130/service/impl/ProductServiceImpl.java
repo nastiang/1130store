@@ -53,8 +53,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public Page<ProductDto> getProductDtoByCategory(Long categoryId){
-        Page<Product> productList = productRepository.findByProductCategory(categoryId);
+    public Page<ProductDto> getProductDtoByCategory(Pageable pageable){
+        Page<Product> productList = productRepository.findByProductCategory(pageable);
         return converterDomainToDto.convertToDto(productList);
     }
 }
